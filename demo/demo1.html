@@ -1,0 +1,89 @@
+<html>
+<head>
+<title> TEST ENGINE</title>
+<meta http-equiv="Content-Type" content="text/html; charset=ASI" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<style>
+.blob{
+	background-color: red;
+	width:100;
+	height:10;
+	left:300;
+	top:300;
+}
+</style>
+</head>
+<body>
+<div id="main">
+	<div id="blob1" class="blob"><center>yiiiha</center></div>
+	<div id="blob2" class="blob"><center>yiiiha</center></div>
+	<div id="blob3" class="blob"><center>yiiiha</center></div>
+</div>
+<script src="../js/lib/TweenLite.min.js"></script>
+<script src="../js/lib/CSSPlugin.min.js"></script>
+<script src="../js/Engine.js"></script>
+<script src="../js/utils.js"></script>
+<script src="../js/Object.js"></script>
+<script src="../js/ObjectGroup.js"></script>
+<script src="../js/Action.js"></script>
+<script src="../js/ActionQueue.js"></script>
+<script src="../js/utils.js"></script>
+<script src="../js/UserInput.js"></script>
+<script src="../js/UserInterface.js"></script>
+<script src="../js/Panel.js"></script>
+<script src="../js/Connection.js"></script>
+<script src="../js/Multiplane.js"></script>
+<script src="../js/Layer.js"></script>
+<script src="../js/Distance.js"></script>
+<script src="../js/Force.js"></script>
+<script src="../js/Angle.js"></script>
+<script src="../js/Vector.js"></script>
+<script src="../js/Compare.js"></script>
+<script src="../js/Average.js"></script>
+<script src="../js/Clamp.js"></script>
+<script src="../js/Random.js"></script>
+<script src="../js/Operator.js"></script>
+<script src="../js/ImageSequence.js"></script>
+<script src="../js/Camera.js"></script>
+<script>
+	var blob1 = new Object('blob1');
+	blob1.show();
+	blob1.setAbsolute();
+	//blob1.setSize({h:200,w:200});
+
+
+	var Mouse = new UserInput('mouse');
+	var distance2d = new Distance('2d');
+	var angle = new Angle(false);
+
+	EG.add(new Connection(Mouse,"absoluteCoords",distance2d,"pointA"));
+	EG.add(new Connection(blob1,"absoluteCoords",distance2d,"pointB"));
+	var coef = new Operator('x/',10);
+	EG.add(new Connection(distance2d,"distance",coef,"inputX"));
+	//EG.add(new Connection(coef,"outputX",blob1,"alpha"));
+	EG.add(new Connection(distance2d,"distance",blob1,"width"));
+	
+	EG.add(new Connection(blob1,"absoluteCoords",angle,"pointA"));
+	EG.add(new Connection(Mouse,"absoluteCoords",angle,"pointB"));
+	EG.add(new Connection(angle,"angle",blob1,"rotation"));
+	
+	//EG.add(new Connection(Mouse,"x",blob1,"x"));	
+	//EG.add(new Connection(Mouse,"y",blob1,"y"));
+		
+	function bind($A,$B){
+		var bond=new Object('bond');
+		bond.attachTo('main');
+		var distance2d = new Distance('2d');
+		var angle = new Angle(false);
+		EG.add(new Connection($A,"absoluteCoords",distance2d,"pointA"));
+		EG.add(new Connection($B,"absoluteCoords",distance2d,"pointB"));
+		EG.add(new Connection($A,"absoluteCoords",bond,"position"));
+		EG.add(new Connection(distance2d,"distance",bond,"width"));
+		EG.add(new Connection(bond,"absoluteCoords",angle,"pointA"));
+		EG.add(new Connection($B,"absoluteCoords",angle,"pointB"));
+		EG.add(new Connection(angle,"angle",bond,"rotation"));	
+	}
+
+</script>
+</body>
+</html>
