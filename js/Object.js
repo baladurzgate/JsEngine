@@ -7,7 +7,7 @@
 	
 		// name
 	
-		if($id!==''){
+		if($id!==null){
 			this.name=$id; 
 		}else{
 			this.name=this.serial;
@@ -90,8 +90,8 @@
 		this.position = {x:0,y:0};  
 		this.getPosition = function (){
 			var coords = {
-				x:getStyle(this.E,"marginLeft"),
-				y:getStyle(this.E,"marginTop")
+				x:getStyle(this.E,"left"),
+				y:getStyle(this.E,"top")
 			};
 			return coords;
 		}	
@@ -120,15 +120,15 @@
 		}
 		this.setPosition = function ($newPosition){
 			this.position = $newPosition; 
-			this.style.marginTop=$newPosition.y;
-			this.style.marginLeft=$newPosition.x;
+			this.style.top=$newPosition.y;
+			this.style.left=$newPosition.x;
 		}
 		this.setX = function ($X){
-			this.style.marginLeft=$X;
+			this.style.left=$X;
 			this.position.x=$X;
 		}
 		this.setY = function ($Y){
-			this.style.marginTop=$Y;
+			this.style.top=$Y;
 			this.position.y=$Y;
 		}
 		this.setPosition({x:0,y:0});
@@ -153,7 +153,6 @@
 			return getRotationDegrees(this.E)
 		}
 		this.setRotation = function ($deg){
-			this.E.style.transformOrigin="left top";
 			this.E.style.webkitTransform = 'rotate('+$deg+'deg)'; 
 			this.E.style.mozTransform    = 'rotate('+$deg+'deg)'; 
 			this.E.style.msTransform     = 'rotate('+$deg+'deg)'; 
@@ -161,14 +160,17 @@
 			this.E.style.transform       = 'rotate('+$deg+'deg)'; 
 			this.rotation = $deg;
 		}
-		this.setPivot = function($pos){
-			
+		this.setPivot = function($pivot){
+			this.E.style.transformOrigin=$pivot;
 		}
 		// size
 		this.size = {w:0,h:0}; 
 		this.getSize = function (){
 			var size={w:getStyle(this.E,"width"),h:getStyle(this.E,"height")};
 			return size;
+		}	
+		this.getWidth = function (){
+			return getStyle(this.E,"width");
 		}	
 		this.setSize= function ($newSize){
 			this.size = $newSize; 

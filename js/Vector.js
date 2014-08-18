@@ -24,10 +24,12 @@
 				var dx=this.getDistance1d(A.x,B.x)
 				var dy=this.getDistance1d(A.y,B.y)
 				var D=this.getDistance2d(A,B);
-				var T=D/this.speed;
-				this.output={
-					x:dx/T,
-					y:dy/T
+				if(D!==0){
+					var T=D/this.speed;
+					this.output={
+						x:dx/T,
+						y:dy/T
+					}
 				}
 				return this.output;
 			}else{

@@ -216,6 +216,9 @@
 							this.valueToPass = A.getOutput($attrA);	
 						}
 					break;
+					case "trigger":
+
+					break;
 					case "connection":
 						switch ($attrA){
 							case "status":
@@ -416,6 +419,16 @@
 										connection.B.setInput("B",parseInt(data[1]),connection.valueToPass);
 									break;									
 								}											
+							break;
+							case "trigger":
+								switch ($attrB){
+									case "input":
+											connection.B.setInput(connection.valueToPass);
+									break;
+									case "value":
+											connection.B.setValue(connection.valueToPass);
+									break;
+								}
 							break;
 							case "connection":
 								switch ($attrB){

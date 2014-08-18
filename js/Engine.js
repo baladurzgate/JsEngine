@@ -31,6 +31,7 @@
 			force:new Array(),
 			vector:new Array(),
 			clock:new Array(),
+			trigger:new Array(),
 			userInput:new Array(),
 			imageSequence:new Array(),
 			imageLoader:new Array(),
@@ -38,6 +39,7 @@
 			action:new Array()
 		};
 		var self = this;
+		this.running=false;
 		this.lastSerial=0;
 		this.generateSerial = function(){
 			this.lastSerial++;
@@ -117,6 +119,9 @@
 				switch($thing.type){
 					case "object" : 
 						var ElementToClone=$thing.E.cloneNode(true);
+						if($newId==''){
+							$newId=EG.generateSerial();
+						}
 						ElementToClone.id = $newId;
 						var parent = getParentElement($thing.E);
 						parent.appendChild(ElementToClone);	
@@ -189,12 +194,21 @@
 		}
 		this.mainLoop = function(){
 			//console.log('mainLoop');
-			for (var i = 0;i<this.processes.length;i++){
-				var process = this.processes[i];
-				if(process.on){
-					process.f();
+			if(this.running==true){
+				for (var i = 0;i<this.processes.length;i++){
+					var process = this.processes[i];
+					if(process.on){
+						process.f();
+					}
 				}
 			}
 		}
-	
+		this.play = function(){
+			this.running = true;
+		
+		}
+		this.stop = function(){
+			this.running = false;
+		
+		}	
 	}

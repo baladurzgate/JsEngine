@@ -55,9 +55,10 @@
 				var calculY = this.input.y+this.velocity.y;		
 				if($round){calculX=Math.round(calculX)};
 				if($round){calculY=Math.round(calculY)};		
+				//if(calculX=="NaN"){calculX=0);
+				//if(calculY=="NaN"){calculY=0);
 				this.output.x=calculX;
 				this.output.y=calculY;
-				console.log(this.output);
 				return this.output;
 			}else{
 				return false;

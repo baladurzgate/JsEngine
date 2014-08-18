@@ -63,7 +63,6 @@
 		}
 		//output
 		this.getValues=function(){
-			console.log( this.values);
 			return this.values;
 		}
 }
