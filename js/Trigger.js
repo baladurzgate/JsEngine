@@ -5,7 +5,6 @@
 		this.name=this.serial;
 		this.coolDown=$cooldown;
 		this.engine="";
-		EG.add(this);
 		
 		//parameters
 		this.Value = $value;

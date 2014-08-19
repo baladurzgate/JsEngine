@@ -86,4 +86,12 @@
 			}
 		}
 	}
-	//
+	function getVarName($var)
+	{
+	  for (var name in window)
+	  {
+		if (window[name]==$var)
+		return(name);
+	  }
+	  return("");
+	}

@@ -26,12 +26,14 @@
 			distance:new Array(),
 			angle:new Array(),
 			average:new Array(),
+			clamp:new Array(),
 			random:new Array(),
 			compare:new Array(),
 			force:new Array(),
 			vector:new Array(),
 			clock:new Array(),
 			trigger:new Array(),
+			variable:new Array(),
 			userInput:new Array(),
 			imageSequence:new Array(),
 			imageLoader:new Array(),
@@ -71,11 +73,11 @@
 			return false;
 		}
 		this.remove = function($thing){	
-			if($thing.engine){
+			if($thing.type!==null){
 				var RC=this.getRelatedConnections($thing);
 				for(var i=0;i<RC.length;i++){
 					RC[i].desactivate();
-					this.removeFromOutliner(RC[i]);
+					//this.removeFromOutliner(RC[i]);
 				}	
 				if(this.removeFromOutliner($thing)){
 					return $thing;
@@ -105,8 +107,9 @@
 			var listOfRelatedConnections = new Array();
 			for (var i = 0;i<this.outliner.connection.length;i++){
 				var pickedConnection = this.outliner.connection[i];
-				if(pickedConnection.A.object == $thing || pickedConnection.B.object == $thing){
+				if(pickedConnection.A==$thing || pickedConnection.B==$thing){
 					listOfRelatedConnections.push(pickedConnection);
+					console.log(pickedConnection);
 				}
 			}
 			return listOfRelatedConnections;
@@ -115,6 +118,7 @@
 		
 		//objects
 		this.clone = function ($thing,$newId){
+			console.log($thing);
 			if($thing.type){
 				switch($thing.type){
 					case "object" : 
@@ -150,9 +154,11 @@
 		this.addProcess = function($process){
 			// $process should look like {f:function,ID:#####,on:true}
 			$process.on=true;
-			this.processes.push($process);
-			if(this.processes.length==1){
-				this.startMainLoop();
+			if(this.findProcess($process)==false){
+				this.processes.push($process);
+				if(this.processes.length==1){
+					this.startMainLoop();
+				}
 			}
 			return $process
 		}
@@ -162,8 +168,7 @@
 		}
 		this.findProcess=function($process){
 			for (var i = 0;i<this.processes.length;i++){
-				var process = this.processes[i];
-				if(process==$process){
+				if(this.processes[i].ID==$process.ID){
 					return true;	
 					break;
 				}

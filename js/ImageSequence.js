@@ -3,6 +3,7 @@
 		this.type="imageSequence";
 		this.serial=EG.generateSerial();
 		this.name=this.serial;
+		this.process;
 		
 		//images
 		this.images = new Array();
@@ -12,15 +13,16 @@
 		this.getCurrentImage = function (){
 			return this.currentImage;
 		}
+		var self = this;
 		this.setCurrentImage = function ($i,$mode){
-			var L = this.images.length;
+			var L = self.images.length;
 			var i = Math.round($i);	
 			switch($mode) {
 				case "normal":
 					if(i>L)i=L-1;
 				break;
 				case "loop":
-					i = Math.round($i-(Math.floor($i/L)*L));				
+					i = Math.round($i-(Math.floor($i/L)*L));						
 				break
 				case "inverse":
 					i = Math.round(L-$i);
@@ -30,8 +32,7 @@
 					i = Math.round(L-i);
 				break;
 			}
-
-			this.displayImage(i);
+			self.displayImage(i);
 		}
 		this.addImage = function ($image){
 			this.images.push($image);
@@ -44,7 +45,7 @@
 		this.interval = false;
 		
 		//lecture
-		this.frameRate=25;
+		this.frameRate=12;
 		this.from = 0;
 		this.to = 0;
 		this.speed = 1;
@@ -65,14 +66,14 @@
 					this.to = $to;
 					if($to == "start") this.to = 0;
 					if($to == "end") this.to = this.images.length+1;
-					this.speed = 1000/this.frameRate;
+					this.speed = this.frameRate*1000;
 					this.loop = $loop;
 					this.currentFrame = this.from;
 					this.interval="";
 					this.timer=0;
-					self = this;
 					if(this.from!=this.to){
-						this.interval=setInterval(function(){self.updateFrame();},this.speed);
+						this.process={f:self.updateFrame,ID:self.serial,on:true};
+						EG.addProcess(this.process);
 						console.log("setInterval : " +this.interval);
 						console.log(this.way);
 						console.log(this.timer);
@@ -97,44 +98,46 @@
 			this.displayImage(0);
 		}
 		this.updateFrame = function (){	
-			var L=this.images.length;
-				switch (this.way){
-					// play backward
-					case '<':
-						if(this.currentFrame!=this.to){	
-							if(this.currentFrame<=0){
-								this.currentFrame = L;
-							}
-							this.currentFrame--;
-						}else{
-							if(this.loop){
-								this.currentFrame=this.from;
+			var L=self.images.length;
+				if(self.timer%4/self.frameRate==0){
+					switch (self.way){
+						// play backward
+						case '<':
+							if(self.currentFrame!=self.to){	
+								if(self.currentFrame<=0){
+									self.currentFrame = L;
+								}
+								self.currentFrame-=1;
 							}else{
-								this.onComplete();
-							}
-						}	
-					break;
-					// play foward
-					case '>':
-						if(this.currentFrame!=this.to){
-							this.currentFrame++;
-							if(this.currentFrame>=L){
-								this.currentFrame = 0;
-							}
-						}else{
-							if(this.loop){
-								this.currentFrame=this.from;
+								if(self.loop){
+									self.currentFrame=self.from;
+								}else{
+									self.onComplete();
+								}
+							}	
+						break;
+						// play foward
+						case '>':
+							if(self.currentFrame!=self.to){	
+								self.currentFrame+=1;
+								if(self.currentFrame>=L){
+									self.currentFrame = 0;
+								}
 							}else{
-								this.onComplete();
+								if(self.loop){
+									self.currentFrame=self.from;
+								}else{
+									self.onComplete();
+								}
 							}
-						}
-					break;
-				}
-				this.displayImage(this.currentFrame);
-			this.timer++;
+						break;
+					}
+				self.displayImage(self.currentFrame);
+			}
+			self.timer++;
 		}
 		this.displayImage = function($index){
-			if(this.images[$index]){
+			if(this.images[$index]!==undefined){
 				this.images[$index].style.display = 'block';
 				for(var i = 0 ; i<this.images.length; i++){
 					if(i!=$index){
@@ -147,9 +150,10 @@
 		this.parentObject ="";
 		this.container = "";
 		this.buildFromDOM =  function(){
-			var div = this.parentObject.E.getElementsByClassName('imageSequence')[0];
-			if(div){
-				this.container = div;
+			var div = this.parentObject.E.getElementsByClassName('imageSequence');
+			if(div.length>=1){
+				
+				this.container = div[0];
 				var images = this.container.getElementsByTagName('img');
 				if(images.length!=0){
 					for (var i = 0 ; i < images.length ; i++){

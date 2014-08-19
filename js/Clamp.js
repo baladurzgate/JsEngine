@@ -4,30 +4,26 @@
 		this.serial=EG.generateSerial();
 		this.name=this.serial;
 		this.engine="";
+		this.min = $min;
+		this.max = $max;
 		EG.add(this);		
 		
 		//input
 		this.input = new Array();
-		this.setInput = function($number,$i){
-			this.input[$number]=$i;
-		}
-		//min
-		this.range=$range
-		this.setRange = function($r){
-			this.range = $r;
-		}
-		//min
-		this.range=$range
-		this.setRange = function($r){
-			this.range = $r;
+		this.setInput = function($i){
+			this.input=$i;
 		}
 		//output
 		this.output=0;
-		this.getOutput = function($line){
-			return this.calcul(this.input[$line])
+		this.getOutput = function(){
+			return this.calcul(this.input)
 		}
 		//calcul
 		this.calcul = function ($n){
-			return $n/this.max;
+			if($n>this.min&&$n<this.max ){
+				return $n;
+			}else{
+				return 1;
+			}
 		}
 	}

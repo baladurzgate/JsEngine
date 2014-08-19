@@ -3,8 +3,9 @@
 		this.engine="";
 		this.type="connection";
 		this.serial=EG.generateSerial();
-		this.name=this.serial;
-		
+		this.name=$objectA.serial+$attrA+$objectB.serial+$attrB;
+		this.name='variable'+$attrA+$objectB.serial+$attrB;
+		console.log(this.name);
 		//output
 		this.A = $objectA;
 		this.attrA=$attrA;
@@ -18,8 +19,8 @@
 			if(A.type){
 				switch (A.type){
 					case "preloader":
-							var output=A.getOutput();
-							this.valueToPass = output[attr];	
+						var output=A.getOutput();
+						this.valueToPass = output[attr];	
 					break;
 					case "object":
 						var posA = A.getPosition();
@@ -119,6 +120,12 @@
 						this.valueToPass = output[$attrA];			
 					break;
 					case "average":
+						if($attrA=="output"){
+							var output = A.getOutput();
+							this.valueToPass = output;	
+						}
+					break;
+					case "clamp":
 						if($attrA=="output"){
 							var output = A.getOutput();
 							this.valueToPass = output;	
@@ -226,10 +233,17 @@
 							break;
 						}
 					break;
+					case "variable":
+						switch ($attrA){
+							case "output":
+								this.valueToPass = A.getOutput();
+							break;
+						}
+					break;
 				}
 			}else{
 				switch ($attrA){
-					case "variable":
+					case "value":
 						this.valueToPass = A;
 					break;
 				}
@@ -342,6 +356,9 @@
 							case "average":
 								connection.B.setInput($attrB,connection.valueToPass);												
 							break;
+							case "clamp":
+								connection.B.setInput(connection.valueToPass);												
+							break;
 							case "random":
 								switch ($attrB){	
 									case "coef":
@@ -441,10 +458,17 @@
 									break;
 								}
 							break;
+							case "variable":
+								switch ($attrB){
+									case "input":
+										connection.B.setValue(connection.valueToPass);
+									break;
+								}
+							break;
 						}
 					}else{
-						switch ($attrA){
-							case "variable":
+						switch ($attrB){
+							case "value":
 								connection.B = connection.valueToPass;
 							break;
 							case "log":
@@ -466,9 +490,6 @@
 				if(this.conserveOffset)this.calculateOffset();
 				this.process={f:connection.update,ID:this.serial,on:true}
 				EG.addProcess(this.process);
-				/*console.log(this.process)
-				console.log("["+this.A.type+"."+this.A.name+"("+$attrA+")]---->[("+$attrB+")"+this.B.type+"."+this.B.name+"]")
-				console.log('connection activated');*/
 			}
 		}
 		this.desactivate = function(){
@@ -476,9 +497,6 @@
 				this.activated=false;
 				var process=EG.getProcessByID(this.serial);
 				EG.removeProcess(process);
-				/*console.log(this.process);
-				console.log("["+this.A.type+"."+this.A.name+"("+$attrA+")]---->[("+$attrB+")"+this.B.type+"."+this.B.name+"]")
-				console.log('connection desactivated');*/
 			}
 		}
 	}

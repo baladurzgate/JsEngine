@@ -3,7 +3,6 @@
 		this.type="object";
 		this.engine="";
 		this.serial =EG.generateSerial();
-		EG.add(this);
 	
 		// name
 	
@@ -62,6 +61,7 @@
 		this.getCSS= function (){
 			return this.E.className;
 		}
+
 		this.setCSS = function ($CSS){
 			this.E.className = $CSS;
 		}

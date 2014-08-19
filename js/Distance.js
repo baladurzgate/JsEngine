@@ -1,9 +1,11 @@
 	function Distance($distanceType,$round){ // Class distance ------(called by Connection)
 		this.type="distance"
 		this.d = new Date();
+		this.serial =EG.generateSerial();
 		this.name=this.d.getTime();
 		this.distance=0;
 		this.input={A:0,B:0};
+		
 		this.setInput = function($point,$i){
 			this.input[$point]=$i;
 		}
