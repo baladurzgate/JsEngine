@@ -95,3 +95,7 @@
 	  }
 	  return("");
 	}
+
+	function connect($A,$attrA,$B,$attrB){
+		EG.add(new Connection($A,$attrA,$B,$attrB));
+	}
