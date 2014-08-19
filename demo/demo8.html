@@ -1,0 +1,465 @@
+<html>
+<head>
+<title> TEST ENGINE</title>
+<meta http-equiv="Content-Type" content="text/html; charset=ASI" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<style>
+
+body{
+
+	background-color:white;
+}
+#main{
+	width:800;
+	height:800;
+	position:absolute;
+	margin-left:25%;
+	margin-top:-100;
+	background-color:#444444;
+	overflow:hidden;
+	border-radius: 500px;
+}
+
+/*----DRAGON------*/
+
+.dragon_tronc{
+	height:20;
+	margin-top:-10;
+	background-image:url('images/dragon/tronc/tronc.png');	background-repeat: repeat-x;
+}
+.dragon_head{
+	width:20;
+	height:20;
+	margin-left:-18;
+	margin-top:-20;
+}
+.dragon_arm{
+	width:20;
+	height:20;
+	margin-left:-30;
+	margin-top:-20;
+}
+.dragon_tail{
+	width:20;
+	height:20;
+	margin-left:-58;
+	margin-top:-20;
+}
+
+/*----EAGLE------*/
+
+.eagle_tronc{
+	height:20;
+	margin-top:-10;
+	background-image:url('images/eagle/tronc/tronc.png');	background-repeat: repeat-x;
+}
+.eagle_head{
+	width:20;
+	height:20;
+	margin-left:-15;
+	margin-top:-10;
+	
+}
+.eagle_arm{
+	width:20;
+	height:20;
+	margin-left:-40;
+	margin-top:-60;
+}
+.eagle_tail{
+	width:20;
+	height:20;
+	margin-left:-40;
+	margin-top:-20;
+}
+</style>
+</head>
+<body>
+</br></br></br></br></br></br><button onClick="EG.play();">START</button>
+<div id="main" >
+	<!--DRAGON-->
+	<div id="dragon_head">
+		<div class="dragon_head">
+			<div class="ImageSequence">
+				<img src="images/dragon/head/head_1.png">
+				<img src="images/dragon/head/head_2.png">
+				<img src="images/dragon/head/head_3.png">
+				<img src="images/dragon/head/head_4.png">
+			</div>
+		</div>
+	</div>
+	<div id="dragon_arm">
+		<div class="dragon_arm">
+			<img src="images/dragon/arm/arm.png">
+		</div>
+	</div>
+	<div id="dragon_tail">
+		<div class="dragon_tail">
+			<div class="ImageSequence">
+				<img src="images/dragon/tail/tail_1.png">
+				<img src="images/dragon/tail/tail_2.png">
+				<img src="images/dragon/tail/tail_3.png">
+			</div>
+		</div>
+	</div>
+
+	<div id="dragon_tronc">
+		<div class="dragon_tronc">
+
+		</div>
+	</div>
+	
+	<!--EAGLE-->
+	<div id="eagle_head">
+		<div class="eagle_head">
+			<div class="ImageSequence">
+				<img src="images/eagle/head/head_1.png">
+			</div>
+		</div>
+	</div>
+	<div id="eagle_arm">
+		<div class="eagle_arm">
+			<img src="images/eagle/arm/arm.png">
+		</div>
+	</div>
+	<div id="eagle_tail">
+		<div class="eagle_tail">
+			<div class="ImageSequence">
+				<img src="images/eagle/tail/tail_1.png">
+				<img src="images/eagle/tail/tail_2.png">
+				<img src="images/eagle/tail/tail_3.png">
+			</div>
+		</div>
+	</div>
+
+	<div id="eagle_tronc">
+		<div class="eagle_tronc">
+
+		</div>
+	</div>
+	
+</div>
+<script src="../js/lib/TweenLite.min.js"></script>
+<script src="../js/lib/CSSPlugin.min.js"></script>
+<script src="../js/Engine.js"></script>
+<script src="../js/utils.js"></script>
+<script src="../js/Object.js"></script>
+<script src="../js/ObjectGroup.js"></script>
+<script src="../js/Action.js"></script>
+<script src="../js/ActionQueue.js"></script>
+<script src="../js/utils.js"></script>
+<script src="../js/UserInput.js"></script>
+<script src="../js/UserInterface.js"></script>
+<script src="../js/Panel.js"></script>
+<script src="../js/Connection.js"></script>
+<script src="../js/Multiplane.js"></script>
+<script src="../js/Layer.js"></script>
+<script src="../js/Distance.js"></script>
+<script src="../js/Force.js"></script>
+<script src="../js/Angle.js"></script>
+<script src="../js/Vector.js"></script>
+<script src="../js/Compare.js"></script>
+<script src="../js/Average.js"></script>
+<script src="../js/Clamp.js"></script>
+<script src="../js/Random.js"></script>
+<script src="../js/Clock.js"></script>
+<script src="../js/Operator.js"></script>
+<script src="../js/ImageSequence.js"></script>
+<script src="../js/Camera.js"></script>
+<script src="../js/Trigger.js"></script>
+<script src="../js/Variable.js"></script>
+<script>
+		
+	var dragon={
+	
+		head:new Object('dragon_head'),
+		tronc:new Object('dragon_tronc'),
+		arm:new Object('dragon_arm'),
+		tail:new Object('dragon_tail')
+	
+	}
+	
+	var eagle={
+	
+		head:new Object('eagle_head'),
+		tronc:new Object('eagle_tronc'),
+		arm:new Object('eagle_arm'),
+		tail:new Object('eagle_tail')
+	}	
+	
+	//-----------------------------------BIRD-------------------------------------//
+	function bird($model,$size,$behavior,$target){
+	
+		var target = $target;
+		
+		var model = $model;
+		
+		this.head,this.tail,this.tronc;
+		var pos={
+		
+			x:Math.random()*800,
+			y:Math.random()*800
+		}
+		
+		this.body = new Array();
+		
+		this.add_head = function(){
+		
+			console.log('head');
+			var head = EG.clone(model.head,'');
+			head.setPosition({x:pos.x+((Math.random()*100))-50,y:pos.y+((Math.random()*100))-50});
+			head.show();
+			head.setAbsolute();
+			head.setPivot("left top");
+			this.body.push(head);		
+			return head;
+		}
+		
+
+		this.add_arm = function(){
+		
+			console.log('arm');
+			var arm = EG.clone(model.arm,'');
+			arm.setPosition({x:pos.x+((Math.random()*100))-50,y:pos.y+((Math.random()*100))-50});
+			arm.show();
+			arm.setAbsolute();
+			arm.setPivot("left top");
+			this.body.push(arm);
+			return arm;
+		}
+		
+		this.add_tail = function(){
+		
+			console.log('tail');
+			var tail = EG.clone(model.tail,'');
+			tail.setPosition({x:pos.x+((Math.random()*100))-50,y:pos.y+((Math.random()*100))-50});
+			tail.show();
+			tail.setAbsolute();
+			tail.setPivot("left top");
+			this.body.push(tail);
+			return tail;
+		}
+		
+		for(var i = 0;i<$size;i++){
+		
+			if(i<1){
+			
+				this.tail = this.add_tail(); 
+				
+			}else if(i<$size-2){
+			
+				this.add_arm();
+				
+			}else{
+			
+				this.add_head();
+			}
+		}	
+		
+		var speed=$size/5;
+		
+		for(var i = 0;i<this.body.length;i++){
+		
+			if(i<this.body.length-1){
+			
+				switch($behavior){
+				
+					case 'chase':
+					
+						chase(this.body[i],this.body[i+1],speed,0.85,speed/20);		
+						
+					break;
+					
+					case 'follow':
+					
+						var F1=new Force({x:0.2,y:0.2},{x:0.7,y:0.7},false);
+						var V1=new Vector(4,true);
+						EG.add(new Connection(this.body[i],"absoluteCoords",V1,"pointA"));	
+						EG.add(new Connection(this.body[i+1],"absoluteCoords",V1,"pointB"));	
+						EG.add(new Connection(V1,"output",F1,"value"));
+						EG.add(new Connection(this.body[i],"coords",F1,"input"))
+						EG.add(new Connection(F1,"output",this.body[i],"position"));	
+						var angle = new Angle(false);
+						EG.add(new Connection(this.body[i+1],"coords",angle,"pointA"));
+						EG.add(new Connection(this.body[i],"absoluteCoords",angle,"pointB"));
+						EG.add(new Connection(angle,"angle",this.body[i],"rotation"));		
+						
+					break;
+
+				}
+				
+				if(i!==this.body.length-2){
+				
+					bind(this.body[i],this.body[i+1],$model.tronc,'elastic');
+					
+				}else{
+				
+					var angle = new Angle(false);
+					EG.add(new Connection(this.body[i],"coords",angle,"pointA"));
+					EG.add(new Connection(this.body[i+1],"coords",angle,"pointB"));
+					EG.add(new Connection(angle,"angle",this.body[i],"rotation"));
+					this.body[i+1].setAlpha(0);
+					
+					var distanceToPlayer = new Distance('2d');
+					EG.add(new Connection(target ,"coords",distanceToPlayer,"pointA"));
+					EG.add(new Connection(this.body[i],"coords",distanceToPlayer,"pointB"));
+					
+					var coef = new Operator('*',0.015); 
+					EG.add(new Connection(distanceToPlayer,"distance",coef,"inputX"));
+					EG.add(new Connection(coef,"outputX",this.body[i].imageSequence,"currentImageInverse"));	
+
+					this.head = this.body[i];
+					
+				}
+				
+				var distance2d = new Distance('2d');
+				EG.add(new Connection(target ,"coords",distance2d,"pointA"));
+				EG.add(new Connection(this.body[i],"coords",distance2d,"pointB"));
+				
+				var deadlyDistance1 = 30;
+				var t1 = new Trigger('<', deadlyDistance1,function(){
+					hitpoints.val-=10;
+					console.log(hitpoints.val);
+				},100)
+				
+				EG.add(new Connection(distance2d,"distance",t1,"input"));
+				
+			}else{
+			
+				switch($behavior){
+				
+					case 'chase':
+					
+						chase(this.body[i],target,speed,1,speed/20);	
+						
+					break;
+					
+					case 'follow':
+					
+						//chase(this.body[i],target,speed,0.99,1);	
+						var F2=new Force({x:0.2,y:0.2},{x:0.7,y:0.7},false);
+						var V2=new Vector(4,false);
+						EG.add(new Connection(this.body[i],"absoluteCoords",V2,"pointA"));	
+						EG.add(new Connection(target,"absoluteCoords",V2,"pointB"));	
+						EG.add(new Connection(V2,"output",F2,"value"));
+						EG.add(new Connection(this.body[i],"coords",F2,"input"))
+						EG.add(new Connection(F2,"output",this.body[i],"position"));		
+						
+					break;
+
+				}
+			}
+		}			
+	}
+	//----------------------------------------------------------------------------//
+	
+	
+	
+	
+	
+	var hitpoints = new Variable(100);
+	var ifdead = new Trigger('<', 10,function(){
+		EG.stop();
+		alert('GAME OVER');
+	},100)
+	EG.add(new Connection(hitpoints,"output",ifdead,"input"));
+	
+	var Mouse = new UserInput('mouse');
+
+	
+	
+	
+	
+	//-------BIND--------//
+	function bind($A,$B,$model,$type){
+
+		console.log($model);
+		var bond=EG.clone($model,'');
+		bond.show();
+		bond.setAbsolute();
+		bond.setPivot("left top");
+		var distance2d = new Distance('2d');
+		var angle = new Angle(false);
+		EG.add(new Connection($A,"coords",distance2d,"pointA"));
+		EG.add(new Connection($B,"coords",distance2d,"pointB"));
+		EG.add(new Connection($A,"coords",angle,"pointA"));
+		EG.add(new Connection($B,"coords",angle,"pointB"));
+		EG.add(new Connection(angle,"angle",bond,"rotation"));	
+		EG.add(new Connection(angle,"angle",$A,"rotation"));	
+		
+		switch ($type){
+		
+			case 'rigid':
+			
+				var half = new Average($averageType,$numOfDec,$round);
+				EG.add(new Connection(distance2d,"distance",half,"inputX"));
+				EG.add(new Connection(half,"outputX",half,"inputX"));
+				
+			break;
+			
+			case 'elastic':
+			
+				EG.add(new Connection($A,"coords",bond,"position"));
+				EG.add(new Connection(distance2d,"distance",bond,"width"));		
+				
+			break;
+		}
+	}
+	
+	
+	//------------------------GAME_OVER--------------//
+	function GameOver(){
+		//alert("game over");
+		//EG.stop();
+	}
+	
+	//-----------------------FOLLOW----------------//
+	function chase($duck,$mother,$speed,$friction,$ondulation){
+	
+		var F1=new Force({x:0.2,y:0.2},{x:$friction,y:$friction},false);
+		var V1=new Vector($speed,true);
+
+		EG.add(new Connection($duck,"absoluteCenter",V1,"pointA"));	
+		EG.add(new Connection($mother,"absoluteCoords",V1,"pointB"));	
+		EG.add(new Connection(V1,"output",F1,"value"));
+		EG.add(new Connection($duck,"coords",F1,"input"))
+		var clock = new Clock();
+		var cos =  new Operator("cos",$ondulation);
+		var sin =  new Operator("sin",$ondulation);
+		var coef = new Operator("*",$speed*2);
+		
+		EG.add(new Connection($duck ,"y",cos,"inputX"));	
+		EG.add(new Connection($duck ,"x",sin,"inputX"));	
+		EG.add(new Connection(cos ,"outputX",coef,"inputX"));	
+		EG.add(new Connection(sin ,"outputX",coef,"inputY"));	
+		var majX =  new Operator("+",1);
+		var majY =  new Operator("+",1);
+		EG.add(new Connection(coef,"outputX",majX,"value"));	
+		EG.add(new Connection(coef,"outputY",majY,"value"));	
+		EG.add(new Connection(F1,"outputX",majX,"inputX"));	
+		EG.add(new Connection(F1,"outputY",majY,"inputX"));
+		EG.add(new Connection(majX,"outputX",$duck,"x"));	
+		EG.add(new Connection(majY,"outputX",$duck,"y"));			
+		
+	}
+	
+	/*add_angel();
+	add_slug();
+	add_slug();	add_slug();	*/
+
+	
+	var Mouse = new UserInput('mouse');
+	var player = new bird(eagle,4,'follow',Mouse);
+
+	var B = player.tail;
+	
+	
+	var D0= new bird(eagle,4,'chase',B);
+	var D1 = new bird(eagle,4,'chase',B);
+	var D2 = new bird(eagle,4,'chase',B);
+
+
+
+</script>
+</body>
+</html>

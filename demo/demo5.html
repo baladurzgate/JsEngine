@@ -1,0 +1,211 @@
+<html>
+<head>
+<title> TEST ENGINE</title>
+<meta http-equiv="Content-Type" content="text/html; charset=ASI" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<style>
+
+body{
+
+	background-color:black;
+}
+.grand_rond{
+	width:50;
+	height:50;
+	border-radius: 25px;
+}
+.petit_rond{
+	width:26;
+	height:26;
+	border-radius: 13px;
+}
+.rouge{
+	background-color:white;
+
+}
+.noir{
+	background-color:white;
+
+}
+.electron{
+	background-color:black;
+	width:10;
+	height:10;
+	border-radius: 5px;
+
+}
+.bond{
+	background-color:white;
+	width:3;
+	height:3;
+
+}
+</style>
+</head>
+<body>
+<div id="main">
+	<div id="B" class="grand_rond noir"><center>B</center></div>
+</div>
+<script src="../js/lib/TweenLite.min.js"></script>
+<script src="../js/lib/CSSPlugin.min.js"></script>
+<script src="../js/Engine.js"></script>
+<script src="../js/utils.js"></script>
+<script src="../js/Object.js"></script>
+<script src="../js/ObjectGroup.js"></script>
+<script src="../js/Action.js"></script>
+<script src="../js/ActionQueue.js"></script>
+<script src="../js/utils.js"></script>
+<script src="../js/UserInput.js"></script>
+<script src="../js/UserInterface.js"></script>
+<script src="../js/Panel.js"></script>
+<script src="../js/Connection.js"></script>
+<script src="../js/Multiplane.js"></script>
+<script src="../js/Layer.js"></script>
+<script src="../js/Distance.js"></script>
+<script src="../js/Force.js"></script>
+<script src="../js/Angle.js"></script>
+<script src="../js/Vector.js"></script>
+<script src="../js/Compare.js"></script>
+<script src="../js/Average.js"></script>
+<script src="../js/Clamp.js"></script>
+<script src="../js/Random.js"></script>
+<script src="../js/Operator.js"></script>
+<script src="../js/ImageSequence.js"></script>
+<script src="../js/Camera.js"></script>
+<script>
+
+	var B = new Object('B');
+	B .show();
+	B.setPosition({x:(Math.random()*100)+700,y:(Math.random()*100)+400});
+	B.setAbsolute();
+
+	var Mouse = new UserInput('mouse');
+	var F1=new Force({x:0.2,y:0.2},{x:0.7,y:0.7},false);
+	var V1=new Vector(2,true);
+	EG.add(new Connection(B,"absoluteCoords",V1,"pointA"));	
+	EG.add(new Connection(Mouse,"absoluteCoords",V1,"pointB"));	
+	EG.add(new Connection(V1,"output",F1,"value"));
+	EG.add(new Connection(B,"coords",F1,"input"))
+	EG.add(new Connection(F1,"output",B,"position"));		
+	
+	function bind($A,$B){
+		var bond=new Object('');
+		bond.attachTo('main');
+		bond.setCSS("bond");
+		bond.show();
+		bond.setAbsolute();
+		var distance2d = new Distance('2d');
+		var angle = new Angle(false);
+		EG.add(new Connection($A,"absoluteCoords",distance2d,"pointA"));
+		EG.add(new Connection($B,"absoluteCoords",distance2d,"pointB"));
+		EG.add(new Connection($A,"absoluteCoords",bond,"position"));
+		EG.add(new Connection(distance2d,"distance",bond,"width"));
+		EG.add(new Connection($A,"absoluteCoords",angle,"pointA"));
+		EG.add(new Connection($B,"absoluteCoords",angle,"pointB"));
+		EG.add(new Connection(angle,"angle",bond,"rotation"));	
+	}
+
+	var band_of_ducks=new Array();
+
+	function add_duck_around($duck_mother,$bunch_of_ducks){
+		var duck = new Object('');
+		duck.show();
+		duck.setPosition({x:(Math.random()*1000)+1,y:(Math.random()*1000)+1});
+		duck.setAbsolute();
+		duck.setCSS('petit_rond rouge')
+		duck.setAlpha(1);
+		duck.attachTo('main');
+		/*var F1=new Force({x:0.2,y:0.2},{x:1,y:1},false);
+		var V1=new Vector(Math.random()*0.1,true);
+		EG.add(new Connection(duck,"absoluteCoords",V1,"pointA"));	
+		EG.add(new Connection($duck_mother,"absoluteCoords",V1,"pointB"));	
+		EG.add(new Connection(V1,"output",F1,"value"));
+		EG.add(new Connection(duck,"coords",F1,"input"))
+		EG.add(new Connection(F1,"output",duck,"position"));*/	
+		
+		var distance2d=new Distance('2d');
+		EG.add(new Connection(duck,"absoluteCoords",distance2d,"pointA"));
+		EG.add(new Connection($duck_mother,"absoluteCoords",distance2d,"pointB"));
+		alphaCoef = new Operator('x/',30);
+		EG.add(new Connection(distance2d,"distance",alphaCoef,"inputX"));
+		EG.add(new Connection(alphaCoef,"outputX",duck,"alpha"));
+		$bunch_of_ducks.push(duck);
+
+	}
+	
+	
+
+	var limit=10;
+	var count=0;
+	setInterval(function(){
+
+	
+	}, 500);
+
+	function add_slug(){
+	
+	
+	
+	
+	}
+	function follow($duck,$mother){
+		var F1=new Force({x:0.2,y:0.2},{x:0.8,y:0.8},false);
+		var V1=new Vector(0.9,true);
+		EG.add(new Connection($duck,"absoluteCoords",V1,"pointA"));	
+		EG.add(new Connection($mother,"absoluteCoords",V1,"pointB"));	
+		EG.add(new Connection(V1,"output",F1,"value"));
+		EG.add(new Connection($duck,"coords",F1,"input"))
+		EG.add(new Connection(F1,"output",$duck,"position"));		
+	}
+	add_duck_around(B);	
+	add_duck_around(B);	
+	add_duck_around(B);	
+	add_duck_around(B);	
+	add_duck_around(B);	
+	add_duck_around(B);	
+
+	for(var i = 0;i<band_of_ducks.length;i++){
+		if(i<band_of_ducks.length-1){
+			follow(band_of_ducks[i],band_of_ducks[i+1]);
+			bind(band_of_ducks[i],band_of_ducks[i+1]);
+		}else{
+			follow(band_of_ducks[i],B);
+		}
+	}
+
+	/*EG.add(new Connection(B,"absoluteCoords",V2,"pointA"));	
+	EG.add(new Connection(A,"absoluteCoords",V2,"pointB"));	
+	EG.add(new Connection(V2,"output",F2,"value"));
+	EG.add(new Connection(A,"coords",F2,"input"));
+	EG.add(new Connection(F2,"output",A,"position"));
+	/*
+	var distance2d = new Distance('2d');
+	EG.add(new Connection(noyau2,"absoluteCoords",distance2d,"pointA"));
+	EG.add(new Connection(noyau2,"absoluteCoords",V,"pointA"));
+	EG.add(new Connection(noyau ,"coords",V,"pointB"));
+	EG.add(new Connection(V,"output",F,"value"));
+	EG.add(new Connection(noyau2,"coords",F,"input"));
+	EG.add(new Connection(F,"output",noyau2,"position"));
+	var Mouse = new UserInput('mouse');
+	
+	function bind($A,$B){
+		var bond=new Object('');
+		bond.attachTo('main');
+		bond.setCSS("bond");
+		bond.show();
+		bond.setAbsolute();
+		var distance2d = new Distance('2d');
+		var angle = new Angle(false);
+		EG.add(new Connection($A,"absoluteCoords",distance2d,"pointA"));
+		EG.add(new Connection($B,"absoluteCoords",distance2d,"pointB"));
+		EG.add(new Connection($A,"absoluteCoords",bond,"position"));
+		EG.add(new Connection(distance2d,"distance",bond,"width"));
+		EG.add(new Connection($A,"absoluteCoords",angle,"pointA"));
+		EG.add(new Connection($B,"absoluteCoords",angle,"pointB"));
+		EG.add(new Connection(angle,"angle",bond,"rotation"));	
+	}*/
+
+	
+</script>
+</body>
+</html>
