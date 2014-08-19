@@ -274,15 +274,15 @@ body{
 					
 						var F1=new Force({x:0.2,y:0.2},{x:0.7,y:0.7},false);
 						var V1=new Vector(4,true);
-						connect(this.body[i],"absoluteCoords",V1,"pointA");	
-						connect(this.body[i+1],"absoluteCoords",V1,"pointB");	
-						connect(V1,"output",F1,"value");
-						connect(this.body[i],"coords",F1,"input")
-						connect(F1,"output",this.body[i],"position");	
+						connect_(this.body[i],"absoluteCoords",V1,"pointA");	
+						connect_(this.body[i+1],"absoluteCoords",V1,"pointB");	
+						connect_(V1,"output",F1,"value");
+						connect_(this.body[i],"coords",F1,"input")
+						connect_(F1,"output",this.body[i],"position");	
 						var angle = new Angle(false);
-						connect(this.body[i+1],"coords",angle,"pointA");
-						connect(this.body[i],"absoluteCoords",angle,"pointB");
-						connect(angle,"angle",this.body[i],"rotation");		
+						connect_(this.body[i+1],"coords",angle,"pointA");
+						connect_(this.body[i],"absoluteCoords",angle,"pointB");
+						connect_(angle,"angle",this.body[i],"rotation");		
 						
 					break;
 
@@ -295,26 +295,26 @@ body{
 				}else{
 				
 					var angle = new Angle(false);
-					connect(this.body[i],"coords",angle,"pointA");
-					connect(this.body[i+1],"coords",angle,"pointB");
-					connect(angle,"angle",this.body[i],"rotation");
+					connect_(this.body[i],"coords",angle,"pointA");
+					connect_(this.body[i+1],"coords",angle,"pointB");
+					connect_(angle,"angle",this.body[i],"rotation");
 					this.body[i+1].setAlpha(0);
 					
 					var distanceToPlayer = new Distance('2d');
-					connect(target ,"coords",distanceToPlayer,"pointA");
-					connect(this.body[i],"coords",distanceToPlayer,"pointB");
+					connect_(target ,"coords",distanceToPlayer,"pointA");
+					connect_(this.body[i],"coords",distanceToPlayer,"pointB");
 					
 					var coef = new Operator('*',0.015); 
-					connect(distanceToPlayer,"distance",coef,"inputX");
-					connect(coef,"outputX",this.body[i].imageSequence,"currentImageInverse");	
+					connect_(distanceToPlayer,"distance",coef,"inputX");
+					connect_(coef,"outputX",this.body[i].imageSequence,"currentImageInverse");	
 
 					this.head = this.body[i];
 					
 				}
 				
 				var distance2d = new Distance('2d');
-				connect(target ,"coords",distance2d,"pointA");
-				connect(this.body[i],"coords",distance2d,"pointB");
+				connect_(target ,"coords",distance2d,"pointA");
+				connect_(this.body[i],"coords",distance2d,"pointB");
 				
 				var deadlyDistance1 = 30;
 				var t1 = new Trigger('<', deadlyDistance1,function(){
@@ -322,7 +322,7 @@ body{
 					console.log(hitpoints.val);
 				},100)
 				
-				connect(distance2d,"distance",t1,"input");
+				connect_(distance2d,"distance",t1,"input");
 				
 			}else{
 			
@@ -339,11 +339,11 @@ body{
 						//chase(this.body[i],target,speed,0.99,1);	
 						var F2=new Force({x:0.2,y:0.2},{x:0.7,y:0.7},false);
 						var V2=new Vector(4,false);
-						connect(this.body[i],"absoluteCoords",V2,"pointA");	
-						connect(target,"absoluteCoords",V2,"pointB");	
-						connect(V2,"output",F2,"value");
-						connect(this.body[i],"coords",F2,"input")
-						connect(F2,"output",this.body[i],"position");		
+						connect_(this.body[i],"absoluteCoords",V2,"pointA");	
+						connect_(target,"absoluteCoords",V2,"pointB");	
+						connect_(V2,"output",F2,"value");
+						connect_(this.body[i],"coords",F2,"input")
+						connect_(F2,"output",this.body[i],"position");		
 						
 					break;
 
@@ -362,7 +362,7 @@ body{
 		EG.stop();
 		alert('GAME OVER');
 	},100)
-	connect(hitpoints,"output",ifdead,"input");
+	connect_(hitpoints,"output",ifdead,"input");
 	
 	var Mouse = new UserInput('mouse');
 
@@ -380,27 +380,27 @@ body{
 		bond.setPivot("left top");
 		var distance2d = new Distance('2d');
 		var angle = new Angle(false);
-		connect($A,"coords",distance2d,"pointA");
-		connect($B,"coords",distance2d,"pointB");
-		connect($A,"coords",angle,"pointA");
-		connect($B,"coords",angle,"pointB");
-		connect(angle,"angle",bond,"rotation");	
-		connect(angle,"angle",$A,"rotation");	
+		connect_($A,"coords",distance2d,"pointA");
+		connect_($B,"coords",distance2d,"pointB");
+		connect_($A,"coords",angle,"pointA");
+		connect_($B,"coords",angle,"pointB");
+		connect_(angle,"angle",bond,"rotation");	
+		connect_(angle,"angle",$A,"rotation");	
 		
 		switch ($type){
 		
 			case 'rigid':
 			
 				var half = new Average($averageType,$numOfDec,$round);
-				connect(distance2d,"distance",half,"inputX");
-				connect(half,"outputX",half,"inputX");
+				connect_(distance2d,"distance",half,"inputX");
+				connect_(half,"outputX",half,"inputX");
 				
 			break;
 			
 			case 'elastic':
 			
-				connect($A,"coords",bond,"position");
-				connect(distance2d,"distance",bond,"width");		
+				connect_($A,"coords",bond,"position");
+				connect_(distance2d,"distance",bond,"width");		
 				
 			break;
 		}
@@ -419,27 +419,27 @@ body{
 		var F1=new Force({x:0.2,y:0.2},{x:$friction,y:$friction},false);
 		var V1=new Vector($speed,true);
 
-		connect($duck,"absoluteCenter",V1,"pointA");	
-		connect($mother,"absoluteCoords",V1,"pointB");	
-		connect(V1,"output",F1,"value");
-		connect($duck,"coords",F1,"input")
+		connect_($duck,"absoluteCenter",V1,"pointA");	
+		connect_($mother,"absoluteCoords",V1,"pointB");	
+		connect_(V1,"output",F1,"value");
+		connect_($duck,"coords",F1,"input")
 		var clock = new Clock();
 		var cos =  new Operator("cos",$ondulation);
 		var sin =  new Operator("sin",$ondulation);
 		var coef = new Operator("*",$speed*2);
 		
-		connect($duck ,"y",cos,"inputX");	
-		connect($duck ,"x",sin,"inputX");	
-		connect(cos ,"outputX",coef,"inputX");	
-		connect(sin ,"outputX",coef,"inputY");	
+		connect_($duck ,"y",cos,"inputX");	
+		connect_($duck ,"x",sin,"inputX");	
+		connect_(cos ,"outputX",coef,"inputX");	
+		connect_(sin ,"outputX",coef,"inputY");	
 		var majX =  new Operator("+",1);
 		var majY =  new Operator("+",1);
-		connect(coef,"outputX",majX,"value");	
-		connect(coef,"outputY",majY,"value");	
-		connect(F1,"outputX",majX,"inputX");	
-		connect(F1,"outputY",majY,"inputX");
-		connect(majX,"outputX",$duck,"x");	
-		connect(majY,"outputX",$duck,"y");			
+		connect_(coef,"outputX",majX,"value");	
+		connect_(coef,"outputY",majY,"value");	
+		connect_(F1,"outputX",majX,"inputX");	
+		connect_(F1,"outputY",majY,"inputX");
+		connect_(majX,"outputX",$duck,"x");	
+		connect_(majY,"outputX",$duck,"y");			
 		
 	}
 	

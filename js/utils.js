@@ -96,6 +96,6 @@
 	  return("");
 	}
 
-	function connect($A,$attrA,$B,$attrB){
+	function connect_($A,$attrA,$B,$attrB){
 		EG.add(new Connection($A,$attrA,$B,$attrB));
 	}
