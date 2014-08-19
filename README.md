@@ -1,1 +1,1 @@
-Moteur d'Animations et de jeux en javascript
+Moteur  de jeux en javascript
