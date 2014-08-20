@@ -1,0 +1,104 @@
+Detail des classes : 
+
+-Engine :
+  description : 
+  inputs : 
+  outputs : 
+-Object :
+  description : 
+  inputs : 
+  outputs : 
+-Connection :
+  description : 
+  inputs : 
+  outputs : 
+-Variable :
+  description : 
+  inputs : 
+  outputs : 
+-Trigger :
+  description : 
+  inputs : 
+  outputs : 
+-Operator :
+  description : 
+  inputs : 
+  outputs : 
+-Distance :
+  description : 
+  inputs : 
+  outputs : 
+-Average :
+  description : 
+  inputs : 
+  outputs : 
+-Clamp :
+  description : 
+  inputs : 
+  outputs : 
+-Clock :
+  description : 
+  inputs : 
+  outputs : 
+-Random :
+  description : 
+  inputs : 
+  outputs : 
+-Angle :
+  description : 
+  inputs : 
+  outputs : 
+-Compare :
+  description : 
+  inputs : 
+  outputs : 
+-Force :
+  description : 
+  inputs : 
+  outputs : 
+-Vector :
+  description : 
+  inputs : 
+  outputs : 
+-Action :
+  description : 
+  inputs : 
+  outputs : 
+-ActionQueue :
+  description : 
+  inputs : 
+  outputs : 
+-ImageSequence :
+  description : 
+  inputs : 
+  outputs : 
+-Multiplane :
+  description : 
+  inputs : 
+  outputs : 
+-Layer :
+  description : 
+  inputs : 
+  outputs : 
+-Camera :
+  description : 
+  inputs : 
+  outputs : 
+-UserInput :
+  description : 
+  inputs : 
+  outputs : 
+-UserInterface :
+  description : 
+  inputs : 
+  outputs : 
+-Panel :
+  description : 
+  inputs : 
+  outputs : 
+-ObjectGroup :
+  description : 
+  inputs : 
+  outputs : 
+-utils :
+
