@@ -206,7 +206,9 @@ body{
 		this.add_head = function(){
 		
 			console.log('head');
+			
 			var head = EG.clone(model.head,'');
+			
 			head.setPosition({x:pos.x+((Math.random()*100))-50,y:pos.y+((Math.random()*100))-50});
 			head.show();
 			head.setAbsolute();
@@ -219,7 +221,9 @@ body{
 		this.add_arm = function(){
 		
 			console.log('arm');
+			
 			var arm = EG.clone(model.arm,'');
+			
 			arm.setPosition({x:pos.x+((Math.random()*100))-50,y:pos.y+((Math.random()*100))-50});
 			arm.show();
 			arm.setAbsolute();
@@ -231,7 +235,9 @@ body{
 		this.add_tail = function(){
 		
 			console.log('tail');
+			
 			var tail = EG.clone(model.tail,'');
+			
 			tail.setPosition({x:pos.x+((Math.random()*100))-50,y:pos.y+((Math.random()*100))-50});
 			tail.show();
 			tail.setAbsolute();
@@ -273,13 +279,17 @@ body{
 					case 'follow':
 					
 						var F1=new Force({x:0.2,y:0.2},{x:0.7,y:0.7},false);
+						
 						var V1=new Vector(4,true);
+						
 						connect_(this.body[i],"absoluteCoords",V1,"pointA");	
 						connect_(this.body[i+1],"absoluteCoords",V1,"pointB");	
 						connect_(V1,"output",F1,"value");
 						connect_(this.body[i],"coords",F1,"input")
 						connect_(F1,"output",this.body[i],"position");	
+						
 						var angle = new Angle(false);
+						
 						connect_(this.body[i+1],"coords",angle,"pointA");
 						connect_(this.body[i],"absoluteCoords",angle,"pointB");
 						connect_(angle,"angle",this.body[i],"rotation");		
@@ -295,16 +305,19 @@ body{
 				}else{
 				
 					var angle = new Angle(false);
+					
 					connect_(this.body[i],"coords",angle,"pointA");
 					connect_(this.body[i+1],"coords",angle,"pointB");
 					connect_(angle,"angle",this.body[i],"rotation");
 					this.body[i+1].setAlpha(0);
 					
 					var distanceToPlayer = new Distance('2d');
+					
 					connect_(target ,"coords",distanceToPlayer,"pointA");
 					connect_(this.body[i],"coords",distanceToPlayer,"pointB");
 					
 					var coef = new Operator('*',0.015); 
+					
 					connect_(distanceToPlayer,"distance",coef,"inputX");
 					connect_(coef,"outputX",this.body[i].imageSequence,"currentImageInverse");	
 
@@ -313,10 +326,12 @@ body{
 				}
 				
 				var distance2d = new Distance('2d');
+				
 				connect_(target ,"coords",distance2d,"pointA");
 				connect_(this.body[i],"coords",distance2d,"pointB");
 				
 				var deadlyDistance1 = 30;
+				
 				var t1 = new Trigger('<', deadlyDistance1,function(){
 					hitpoints.val-=10;
 					console.log(hitpoints.val);
@@ -338,7 +353,9 @@ body{
 					
 						//chase(this.body[i],target,speed,0.99,1);	
 						var F2=new Force({x:0.2,y:0.2},{x:0.7,y:0.7},false);
+						
 						var V2=new Vector(4,false);
+						
 						connect_(this.body[i],"absoluteCoords",V2,"pointA");	
 						connect_(target,"absoluteCoords",V2,"pointB");	
 						connect_(V2,"output",F2,"value");
@@ -358,6 +375,7 @@ body{
 	
 	
 	var hitpoints = new Variable(100);
+	
 	var ifdead = new Trigger('<', 10,function(){
 		EG.stop();
 		alert('GAME OVER');
@@ -378,8 +396,11 @@ body{
 		bond.show();
 		bond.setAbsolute();
 		bond.setPivot("left top");
+		
 		var distance2d = new Distance('2d');
+		
 		var angle = new Angle(false);
+		
 		connect_($A,"coords",distance2d,"pointA");
 		connect_($B,"coords",distance2d,"pointB");
 		connect_($A,"coords",angle,"pointA");
@@ -392,6 +413,7 @@ body{
 			case 'rigid':
 			
 				var half = new Average($averageType,$numOfDec,$round);
+				
 				connect_(distance2d,"distance",half,"inputX");
 				connect_(half,"outputX",half,"inputX");
 				
@@ -417,23 +439,31 @@ body{
 	function chase($duck,$mother,$speed,$friction,$ondulation){
 	
 		var F1=new Force({x:0.2,y:0.2},{x:$friction,y:$friction},false);
+		
 		var V1=new Vector($speed,true);
 
 		connect_($duck,"absoluteCenter",V1,"pointA");	
 		connect_($mother,"absoluteCoords",V1,"pointB");	
 		connect_(V1,"output",F1,"value");
 		connect_($duck,"coords",F1,"input")
+		
 		var clock = new Clock();
+		
 		var cos =  new Operator("cos",$ondulation);
+		
 		var sin =  new Operator("sin",$ondulation);
+		
 		var coef = new Operator("*",$speed*2);
 		
 		connect_($duck ,"y",cos,"inputX");	
 		connect_($duck ,"x",sin,"inputX");	
 		connect_(cos ,"outputX",coef,"inputX");	
 		connect_(sin ,"outputX",coef,"inputY");	
+		
 		var majX =  new Operator("+",1);
+		
 		var majY =  new Operator("+",1);
+		
 		connect_(coef,"outputX",majX,"value");	
 		connect_(coef,"outputY",majY,"value");	
 		connect_(F1,"outputX",majX,"inputX");	
@@ -449,13 +479,16 @@ body{
 
 	
 	var Mouse = new UserInput('mouse');
+	
 	var player = new bird(eagle,4,'follow',Mouse);
 
 	var B = player.tail;
 	
 	
 	var D0= new bird(eagle,4,'chase',B);
+	
 	var D1 = new bird(eagle,4,'chase',B);
+	
 	var D2 = new bird(eagle,4,'chase',B);
 
 
