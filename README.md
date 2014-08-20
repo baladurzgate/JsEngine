@@ -2,4 +2,4 @@ Moteur  de jeux en javascript
 
 -js : code source du moteur 
 
--demo : differentes application notament un petit jeux
+-demo : differentes applications notament un petit jeux
