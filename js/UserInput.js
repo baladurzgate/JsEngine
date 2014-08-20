@@ -16,16 +16,40 @@
 		//values
 		this.values={x:0,y:0};
 		var self=this;	
+		this.lastPosition={x:0,y:0};
 		switch(this.inputType){
 			case "mouse":
 				addEvent(document,"mousemove",function(e){
+					console.log('move');
 					self.values= {
 						x:e.clientX+document.documentElement.scrollLeft ,
 						y:e.clientY+document.body.scrollTop
 					};
+					self.lastPosition= {
+						x:self.values.x ,
+						y:self.values.y
+					};
 				});
 			break;
-			case "keyBoard":
+			case "click":
+				addEvent(document,"mousedown",function(e){
+					self.values= {
+						x:e.clientX+document.documentElement.scrollLeft ,
+						y:e.clientY+document.body.scrollTop
+					};
+					self.lastPosition= {
+						x:self.values.x ,
+						y:self.values.y
+					};
+				});
+				addEvent(document,"mouseup",function(e){
+					self.values= {
+						x:self.lastPosition.x ,
+						y:self.lastPosition.y
+					};
+				});
+			break;
+			case "keyboard":
 				addEvent(document,'keydown',function(e){
 					console.log(e.keyCode);
 					switch (e.keyCode) {

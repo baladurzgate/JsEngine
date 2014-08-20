@@ -190,7 +190,24 @@
 									break;									
 								}
 							break;
-							case "keyBoard":
+							case "click":
+								var mousePos = A.getValues();
+								switch (attr){
+									case "x":
+										this.valueToPass = mousePos.x;
+									break;		
+									case "y":
+										this.valueToPass = mousePos.y;
+									break;	
+									case "coords":
+										this.valueToPass = mousePos;
+									break;
+									case "absoluteCoords":
+										this.valueToPass = mousePos;
+									break;									
+								}
+							break;
+							case "keyboard":
 								var keyPos = A.getValues();
 								switch (attr){
 									case "x":
