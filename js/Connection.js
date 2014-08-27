@@ -1,11 +1,11 @@
 	function Connection ($objectA,$attrA,$objectB,$attrB,$conserveOffset){ // class connection ------(called by All)
+	
 		//engine
 		this.engine="";
 		this.type="connection";
-		this.serial=EG.generateSerial();
+		this.serial=$objectA.serial+$attrA+$objectB.serial+$attrB;
 		this.name=$objectA.serial+$attrA+$objectB.serial+$attrB;
-		this.name='variable'+$attrA+$objectB.serial+$attrB;
-		console.log(this.name);
+
 		//output
 		this.A = $objectA;
 		this.attrA=$attrA;
@@ -13,6 +13,7 @@
 		//input 
 		this.B = $objectB;
 		this.attrB=$attrB;
+		
 		this.calculateValueToPass = function(){
 			var A=this.A;
 			var attr=this.attrA;
@@ -79,7 +80,10 @@
 							case "height":
 								var size = A.getSize();
 								this.valueToPass = size.h;
-							break;									
+							break;	
+							case "scale":
+								this.valueToPass = A.getScale();
+							break;								
 						}
 					break;
 					case "operator":
@@ -165,6 +169,40 @@
 							break;
 						}
 					break;
+					case "mobile":
+						switch ($attrA){
+							case "coords":
+								this.valueToPass = A.getPosition();
+							break;		
+							case "x":
+								this.valueToPass = A.getPosition().x;
+							break;
+							case "y":
+								this.valueToPass = A.getPosition().y;
+							break;
+							case "width":
+								this.valueToPass = A.size.w;
+							break;
+							case "height":
+								this.valueToPass = A.size.h;
+							break;
+							case "next_position":
+								this.valueToPass = A.getNextPosition();
+							break;
+							case "speed":
+								this.valueToPass = A.getSpeed();
+							break;	
+							case "mass":
+								this.valueToPass = A.getMass();
+							break;
+							case "force":
+								this.valueToPass = A.getMass();
+							break;
+							case "time":
+								this.valueToPass = A.getTime();
+							break;
+						}
+					break;					
 					case "clock":
 						if($attrA=="output"){
 							var output = A.getOutput();
@@ -191,6 +229,39 @@
 								}
 							break;
 							case "click":
+								var mousePos = A.getValues();
+								switch (attr){
+									case "x":
+										this.valueToPass = mousePos.x;
+									break;		
+									case "y":
+										this.valueToPass = mousePos.y;
+									break;	
+									case "coords":
+										this.valueToPass = mousePos;
+									break;
+									case "absoluteCoords":
+										this.valueToPass = mousePos;
+									break;									
+								}
+							case "drag":
+								var mousePos = A.getValues();
+								switch (attr){
+									case "x":
+										this.valueToPass = mousePos.x;
+									break;		
+									case "y":
+										this.valueToPass = mousePos.y;
+									break;	
+									case "coords":
+										this.valueToPass = mousePos;
+									break;
+									case "absoluteCoords":
+										this.valueToPass = mousePos;
+									break;									
+								}
+							break;
+							case "scroll":
 								var mousePos = A.getValues();
 								switch (attr){
 									case "x":
@@ -234,10 +305,10 @@
 						this.valueToPass = A['get'+attributeName]();
 					break;
 					case "compare":	
-						if($attrA=="all"){
-							this.valueToPass = A.getOutput("all");	
-						}else{
-							this.valueToPass = A.getOutput($attrA);	
+						switch ($attrA){
+							case "output":
+								this.valueToPass =  A.getOutput();	
+							break;
 						}
 					break;
 					case "trigger":
@@ -315,7 +386,6 @@
 										connection.B.setPosition(connection.valueToPass);
 									break;
 									case "alpha":
-										//console.log(connection.valueToPass);
 										connection.B.setAlpha(connection.valueToPass+connection.offset);
 									break;
 									case "size":
@@ -329,6 +399,12 @@
 									break;
 									case "height":
 										connection.B.setHeight(connection.valueToPass+connection.offset);
+									break;
+									case "scale":
+										connection.B.setScale(connection.valueToPass);
+									break;
+									case "padding":
+										connection.B.setPadding(connection.valueToPass);
 									break;
 								}		
 							break
@@ -383,8 +459,30 @@
 									break;										
 								}											
 							break;
-							case "action":
-								connection.B.setAttribute($attrB,connection.valueToPass);									
+							case "mobile":
+								switch ($attrB){
+									case "position":
+										connection.B.setPosition(connection.valueToPass);	
+									break;	
+									case "x":
+										connection.B.setX(connection.valueToPass);	
+									break;
+									case "y":
+										connection.B.setY(connection.valueToPass);	
+									break;									
+									case "speed":
+										connection.B.setSpeed(connection.valueToPass);	
+									break;	
+									case "mass":
+										connection.B.setMass(connection.valueToPass);	
+									break;	
+									case "force":
+										connection.B.addForce(connection.valueToPass,connection.A.serial);	
+									break;
+									case "time":
+										connection.B.setTime(connection.valueToPass);	
+									break;	
+								}
 							break;
 							case "force":
 								switch ($attrB){	
@@ -430,6 +528,9 @@
 									break;	
 								}
 							break;
+							case "action":
+								connection.B.setAttribute($attrB,connection.valueToPass);									
+							break;
 							case "imageSequence":	
 								switch ($attrB){
 									case "currentImage":
@@ -444,13 +545,12 @@
 								}
 							break;
 							case "compare":
-								var data=$attrB.split('.');
-								switch (data[0]){	
+								switch ($attrB){	
 									case "A":
-										connection.B.setInput("A",parseInt(data[1]),connection.valueToPass);
+										connection.B.setInput("A",connection.valueToPass);
 									break;		
 									case "B":
-										connection.B.setInput("B",parseInt(data[1]),connection.valueToPass);
+										connection.B.setInput("B",connection.valueToPass);
 									break;									
 								}											
 							break;
@@ -482,38 +582,40 @@
 									break;
 								}
 							break;
+							case "console":
+								switch ($attrB){
+									case "log":
+										console.log(connection.attrA+' = '+connection.valueToPass);
+									break;
+								}
+							break;
 						}
 					}else{
-						switch ($attrB){
-							case "value":
-								connection.B = connection.valueToPass;
-							break;
-							case "log":
-								connection.B = connection.valueToPass;
-								console.log(connection.B);
-							break;
-						}
+
 					}
 				}
 			}
 		}
 
-		// activate-desactivate
 		this.activated = false;
 		this.process ="";
+		
 		this.activate = function(){	
-			if(!this.activated){	
-				this.activated=true;
+			var process=EG.getProcessByID(this.serial);
+			if(process==false){
 				if(this.conserveOffset)this.calculateOffset();
 				this.process={f:connection.update,ID:this.serial,on:true}
 				EG.addProcess(this.process);
+
+			}else{
+				process.on = true;
 			}
+			this.activated = true;
 		}
+		
 		this.desactivate = function(){
-			if(this.activated){
-				this.activated=false;
-				var process=EG.getProcessByID(this.serial);
-				EG.removeProcess(process);
-			}
+			var process=EG.getProcessByID(this.serial);
+			process.on = false;
+			this.activated = false;
 		}
 	}
