@@ -1,4 +1,4 @@
-	function Clamp($min,$max){ //pas terminé
+	function Clamp($min,$max){ //pas terminÃ©
 		//engine
 		this.type="clamp"
 		this.serial=EG.generateSerial();
@@ -22,8 +22,12 @@
 		this.calcul = function ($n){
 			if($n>this.min&&$n<this.max ){
 				return $n;
-			}else{
-				return 1;
+			}
+			if($n>this.max){
+				return this.max;
+			}
+			if($n<this.min){
+				return this.min;
 			}
 		}
 	}
