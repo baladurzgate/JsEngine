@@ -1,9 +1,4 @@
-	//WebEngine by Alexandre Cormier (bighal.cormier@gmail.com)
-	//Beta v1.2;
-
-	
-	// CLASSES :
-	
+	//Engine by Alexandre Cormier (contact@alexandrecormier.fr)
 
 	//---------VARIABLE GLOBALE EG-------------
 	var EG=new Engine();
@@ -29,6 +24,7 @@
 			clamp:new Array(),
 			random:new Array(),
 			compare:new Array(),
+			mobile:new Array(),
 			force:new Array(),
 			vector:new Array(),
 			clock:new Array(),
@@ -38,8 +34,10 @@
 			imageSequence:new Array(),
 			imageLoader:new Array(),
 			actionQueue:new Array(),
-			action:new Array()
+			action:new Array(),
+			console:new Array()
 		};
+		
 		var self = this;
 		this.running=false;
 		this.lastSerial=0;
@@ -57,6 +55,9 @@
 						case "connection":
 							$thing.activate();
 						break;
+						case "mobile":
+							$thing.activate();
+						break;
 					}
 					this.outliner[$thing.type].push($thing);	
 				}
@@ -72,6 +73,7 @@
 			}
 			return false;
 		}
+		
 		this.remove = function($thing){	
 			if($thing.type!==null){
 				var RC=this.getRelatedConnections($thing);
@@ -85,6 +87,7 @@
 			}
 			return false;
 		}
+		
 		this.getIndexFromType = function($thing){
 			if($thing.engine){
 				if($thing.type){
@@ -95,6 +98,7 @@
 			}
 			return false
 		}
+		
 		this.getIndexFromAll = function($thing){
 			if($thing.engine){
 					for (var i = 0;i<this.outliner.all.length;i++){
@@ -103,6 +107,7 @@
 			}
 			return false;
 		}
+		
 		this.getRelatedConnections = function($thing){
 			var listOfRelatedConnections = new Array();
 			for (var i = 0;i<this.outliner.connection.length;i++){
@@ -118,7 +123,6 @@
 		
 		//objects
 		this.clone = function ($thing,$newId){
-			console.log($thing);
 			if($thing.type){
 				switch($thing.type){
 					case "object" : 
@@ -139,6 +143,7 @@
 			}
 			return false
 		}
+		
 		this.getObjectByName = function($name){
 			for(var i = 0;i<this.outliner.all.length;i++){
 				if(this.outliner.all[i].name==$name){
@@ -162,19 +167,31 @@
 			}
 			return $process
 		}
+		
 		this.removeProcess = function($process){
 			$process.on=false;
 			return this.processes.splice(this.getProcessIndex($process),1);
 		}
+		
 		this.findProcess=function($process){
 			for (var i = 0;i<this.processes.length;i++){
 				if(this.processes[i].ID==$process.ID){
-					return true;	
+					return this.processes[i];	
 					break;
 				}
 			}
 			return false;
 		}
+		
+		this.desactivateProcess=function($process){
+			var p = this.findProcess($process);
+			if(p!==false){
+				p.on = false;
+				return true;
+			}
+			return false;
+		}
+		
 		this.getProcessByID = function($ID){
 			for (var i = 0;i<this.processes.length;i++){
 				var process = this.processes[i];
@@ -185,6 +202,7 @@
 			}
 			return false;
 		}
+		
 		this.getProcessIndex = function($process){
 			for (var i = 0;i<this.processes.length;i++){
 				var process = this.processes[i];
@@ -193,12 +211,14 @@
 			}
 			return false;
 		}
+		
 		this.interval = "";
+		
 		this.startMainLoop = function (){
 			this.interval = setInterval(function(){self.mainLoop();},1);
 		}
+		
 		this.mainLoop = function(){
-			//console.log('mainLoop');
 			if(this.running==true){
 				for (var i = 0;i<this.processes.length;i++){
 					var process = this.processes[i];
@@ -208,10 +228,12 @@
 				}
 			}
 		}
+		
 		this.play = function(){
 			this.running = true;
 		
 		}
+		
 		this.stop = function(){
 			this.running = false;
 		
