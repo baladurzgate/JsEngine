@@ -129,6 +129,9 @@
 							this.valueToPass = output;	
 						}
 					break;
+					case "matrix":
+						this.valueToPass = A.getOutput($attrA);
+					break;
 					case "clamp":
 						if($attrA=="output"){
 							var output = A.getOutput();
@@ -447,6 +450,9 @@
 								}				
 							break;
 							case "average":
+								connection.B.setInput($attrB,connection.valueToPass);												
+							break;
+							case "matrix":
 								connection.B.setInput($attrB,connection.valueToPass);												
 							break;
 							case "clamp":
