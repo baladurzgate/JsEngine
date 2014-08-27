@@ -44,39 +44,51 @@ Detail des classes :
   
 -UserInput :
   code : new UserInput($inputType)
-  description : passe des valeurs venant de l'utilisateur ('mouse' , 'keyboard')
+  description : passe des valeurs venant de l'utilisateur ('mouse' , 'click' , 'drag' , 'scroll' , 'keyboard')
   inputs : ...
   outputs : coords
   
 -Average :
-  description : 
+  code : new Average ($averageType,$numOfDec,$round)
+  description : renvoi une moyenne des données passées
   inputs : 
   outputs : 
   
--Clamp :
-  description : 
-  inputs : 
-  outputs : 
+-Clamp : 
+  code : new Clamp($min,$max)
+  description : renvoi min si n est < min et max si n > max
+  inputs : input  , min , max
+  outputs :  output
   
 -Clock :
-  description : 
-  inputs : 
-  outputs : 
+  code : new Clock()
+  description : augmente de 1 a chaque boucle
+  inputs : ...
+  outputs : output
   
--Random :
-  description : 
-  inputs : 
-  outputs : 
+-Random : 
+  code : new Random($coef,$round)
+  description : injecte une valuer au hasard mulitipliée par un coedicient
+  inputs : coef
+  outputs : output
   
--Angle :
-  description : 
-  inputs : 
-  outputs : 
+-Angle : 
+  code : new Angle($round)
+  description : renvoi un angle en fonction de trois points
+  inputs : pointA , pointB , pointC (facultatif);
+  outputs : angle , angleInRadians
   
 -Compare :
-  description : 
-  inputs : 
-  outputs : 
+  code : new Compare($sign) __ '<' '>' '==' '!=' '<=' '>='
+  description : compare deux valeur et renvoi 0 ou 1
+  inputs : A , B
+  outputs : output
+  
+-Mobile :
+  code : new Mobile() ou bien add_Mobile() qui lance ses calculs
+  description : particule physique
+  inputs : position , x , y , speed , mass , friction , force , time 
+  outputs : coords , x , y  , speed , mass , friction , force , time
   
 -Force :
   description : 
