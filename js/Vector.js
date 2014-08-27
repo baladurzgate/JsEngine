@@ -8,6 +8,7 @@
 		//input
 		this.input={A:{x:0,y:0},B:{x:0,y:0}};
 		this.setInput = function($point,$i){
+			if($i==NaN)$i={x:0,y:0};
 			this.input[$point]=$i;
 		}
 		//speed
@@ -16,8 +17,10 @@
 			this.speed=$s;
 		}
 		//ouput
-		this.ouput={x:0,y:0,timeLeft:10};
+		this.ouput={x:0,y:0};
+		
 		this.getOutput = function(){
+			if(this.speed==0){this.speed=1;}
 			if(this.speed&&this.input){
 				var A=this.input.A;
 				var B=this.input.B;
@@ -32,10 +35,8 @@
 					}
 				}
 				return this.output;
-			}else{
-				console.log("vector wrong arguments:"+(this.speed&&this.input));
-				return false;
 			}
+			return {x:0,y:0};
 		}	
 		this.getDistance1d = function ($A,$B){
 			var A=$A;
