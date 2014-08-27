@@ -1,0 +1,696 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+<body>
+<style>
+	body{
+		background-color:#FFFF44;
+		font-family:'arial';
+	}
+	#view{
+		height:80%;
+		width:90%;
+		overflow:hidden;
+		margin:auto;	
+		background-color:#001111;
+		cursor: move;
+	}
+	#UI{
+		height:120;
+		width:300;	
+		background-color:#333333;
+		cursor: pointer;	
+		margin:auto;	
+		z-index:3000;	
+		position:relative;
+		padding:10;
+	}
+	#zoom_cursor{
+		height:30;
+		width:30;	
+		background-color:#ff0044;	
+		z-index:4000;
+		position:relative;
+		margin-left:10;
+		margin-top:40;
+	}
+	#size_cursor{
+		height:30;
+		width:30;	
+		background-color:#ff0044;	
+		z-index:4000;
+		position:relative;
+		margin-top:60;
+	}
+	.switch{
+		height:40;		
+		z-index:4000;
+		position:relative;
+		margin-top:60;
+		border-style:solid ;
+	}
+	.on{
+		background-color:#000088;
+		border-color:#33FFAA;
+		color:#33FFAA
+		
+	}
+	.off{
+		background-color:#111111;
+		border-color:#001133;
+		color:#112211;
+	}
+	#ground{
+		position:relative;
+	}
+	#tree{
+
+	}
+
+	.post{
+		height:100;
+		width:200;
+		border-style:solid;
+		background-color:#AAAAAA;
+		z-index:2000;
+		overflow:auto;
+	}
+	.title{
+		border-style:solid;
+		background-color:#EEEEEE;
+	}
+	.tags{
+		border-style:solid;
+		background-color:#aabbff;
+	}
+	.node{
+		padding:5;
+		font-size:1em;
+		border-color:#FFFFFF;
+		color:#FFFFFF;
+		background-color:#000000;
+		z-index:9000;
+		border-style:solid ;
+		border-color:#FFEEEE;
+		-webkit-user-select: none; /* Chrome/Safari */        
+		-moz-user-select: none; /* Firefox */
+		-ms-user-select: none; /* IE10+ */
+		-o-user-select: none;
+		user-select: none;
+	}
+	.bond{
+		width:100%;
+		height:8;
+		background-color:#DDDDDD;
+		margin-top:-4;
+	}
+</style>
+</br>
+</br>
+</br>
+<div id="view">
+	<div id="ground">
+		<div id="tree">
+			<div id="bond">
+				<div class="bond">
+					
+				</div>
+			</div>
+				<div id="node" class="node">
+				</div>
+			<div>
+				<div id="center" class="center"></div>
+				<div class="post" id="1">
+					<div class="title">KARL_MARX</div>
+					<div class="tags">grosse_barbe,mechants,morts</div>
+					<button onclick="alert('redirection vers ..');">lien</button>
+					<img src="http://www.walkingbutterfly.com/wp-content/uploads/2011/02/karl-marx-245x300.jpg">
+				</div>
+
+				<div class="post" id="2">
+					<div class="title">GANDALF</div>
+					<div class="tags">grosse_barbe,magie</div>
+				</div>
+				<div class="post" id="5">
+					<div class="title">BAILLART</div>
+					<div class="tags">chauve,neutralité_du_net,libre</div>
+					<button onclick="alert('redirection vers ..');">lien</button>
+				</div>
+
+				<div class="post" id="6">
+					<div class="title">ZIMMERMANN</div>
+					<div class="tags">neutralité_du_net,libre</div>
+					<button onclick="alert('redirection vers ..');">lien</button>
+				</div>
+				<div class="post" id="99">
+					<div class="title">JESUS</div>
+					<div class="tags">magie</div>
+					<button onclick="alert('redirection vers ..');">lien</button>
+				</div>
+
+				<div class="post" id="8">
+					<div class="title">STEVE_JOBS</div>
+					<div class="tags">mechants,morts,chauve</div>
+					<button onclick="alert('redirection vers ..');">lien</button>
+				</div>
+
+				<div class="post" id="9">
+					<div class="title">GOOGLE</div>
+					<div class="tags">mechants</div>
+					<button onclick="alert('redirection vers ..');">lien</button>
+				</div>
+				<div class="post" id="10">
+					<div class="title">BILL_GATE</div>
+					<div class="tags">mechants</div>
+					<button onclick="alert('redirection vers ..');">lien</button>
+				</div>
+				<div class="post" id="199">
+					<div class="title">DESCARTES</div>
+					<div class="tags">moustache,philosophie</div>
+					<button onclick="alert('redirection vers ..');">lien</button>
+				</div>
+
+				<div class="post" id="12">
+					<div class="title">george brassens</div>
+					<div class="tags">moustache</div>
+					<button onclick="alert('redirection vers ..');">lien</button>
+				</div>
+				<div class="post" id="13">
+					<div class="title">la methode</div>
+					<div class="tags">philosophie,livre</div>
+					<button onclick="alert('redirection vers ..');">lien</button>
+				</div>			
+				<div class="post" id="14">
+					<div class="title">beluga</div>
+					<div class="tags">mamifere,marin,chauve</div>
+					<button onclick="alert('redirection vers ..');">lien</button>
+				</div>		
+				<div class="post" id="15">
+					<div class="title">belette</div>
+					<div class="tags">mamifere,terrestre</div>
+					<button onclick="alert('redirection vers ..');">lien</button>
+				</div>		
+				<div class="post" id="1776">
+					<div class="title">gimp</div>
+					<div class="tags">outils,liberateur</div>
+					<button onclick="alert('redirection vers ..');">lien</button>
+				</div>
+				<div class="post" id="17">
+					<div class="title">blender</div>
+					<div class="tags">outils</div>
+					<button onclick="alert('redirection vers ..');">lien</button>
+				</div>
+				<div class="post" id="1558">
+					<div class="title">photoshop</div>
+					<div class="tags">outils,privatif</div>
+					<button onclick="alert('redirection vers ..');">lien</button>
+				</div>
+				<div class="post" id="197">
+					<div class="title">gmail</div>
+					<div class="tags">outils,privatif</div>
+					<button onclick="alert('redirection vers ..');">lien</button>
+				</div>	
+				<div class="post" id="55">
+					<div class="title">RICHARD_STALLMAN</div>
+					<div class="tags">gnu,MIT,grosse_barbe,libre,magie</div>
+					<button onclick="alert('redirection vers ..');">lien</button>
+					<img src="http://ebiquity.umbc.edu/faces/382.jpeg">
+				</div>				
+			</div>
+		</div>
+	</div>
+</div>
+<div id="UI">
+	<div id = "tools">
+		<span id="move_switch" class="switch on"  onclick="toogle_mode('move')">MOVE</span>
+		<span id="pitch_switch" class="switch off" onclick="toogle_mode('pitch')">PITCH</span>
+	</div>
+	<div id = "zoom_cursor" class="zoom_cursor"></div>
+	<div id = "size_cursor" class="size_cursor"></div>
+</div>
+<script src="../js/lib/TweenLite.min.js"></script>
+<script src="../js/lib/CSSPlugin.min.js"></script>
+<script src="../js/Engine.js"></script>
+<script src="../js/utils.js"></script>
+<script src="../js/Object.js"></script>
+<script src="../js/ObjectGroup.js"></script>
+<script src="../js/Action.js"></script>
+<script src="../js/ActionQueue.js"></script>
+<script src="../js/utils.js"></script>
+<script src="../js/UserInput.js"></script>
+<script src="../js/UserInterface.js"></script>
+<script src="../js/Panel.js"></script>
+<script src="../js/Connection.js"></script>
+<script src="../js/Multiplane.js"></script>
+<script src="../js/Layer.js"></script>
+<script src="../js/Distance.js"></script>
+<script src="../js/Mobile.js"></script>
+<script src="../js/Force.js"></script>
+<script src="../js/Angle.js"></script>
+<script src="../js/Vector.js"></script>
+<script src="../js/Compare.js"></script>
+<script src="../js/Average.js"></script>
+<script src="../js/Clamp.js"></script>
+<script src="../js/Random.js"></script>
+<script src="../js/Clock.js"></script>
+<script src="../js/Operator.js"></script>
+<script src="../js/ImageSequence.js"></script>
+<script src="../js/Camera.js"></script>
+<script src="../js/Trigger.js"></script>
+<script src="../js/Matrix.js"></script>
+<script src="../js/Variable.js"></script>
+<script src="../js/Console.js"></script>
+<script>
+	
+	EG.play();
+	
+	var view=document.getElementById('view');
+	
+	//var c = new Console();
+	
+	var center = add_Mobile();
+	center.setPosition({x:500,y:300});
+
+	var node_pattern = new Object('node');
+	
+	node_pattern.setAbsolute();
+
+	var bond_pattern = new Object('bond');
+	bond_pattern.show();
+	bond_pattern.setAbsolute();
+	
+	var zoom_cursor = new Object('zoom_cursor');
+	zoom_cursor.show();
+	zoom_cursor.setAbsolute();
+	
+	var tag_divs = document.getElementsByClassName('tags');
+	
+	var tags = new Array();
+	
+	var mesh = new Array();
+
+	var mouse = new UserInput('mouse',view,view);
+	
+	for (var td=0;td<tag_divs.length;td++){
+	
+		var str = tag_divs[td].innerHTML;
+		
+		var splitString = str.split(',');
+		
+		if(splitString.length>0){
+			for (var s=0;s<splitString.length;s++){
+				tags.push(splitString[s]);
+			}
+		}else{
+			tags.push(splitString[0]);
+		}
+		
+	}
+	
+	uniques_tags=(getCategoriesIn(tags));
+	
+	var nodes = new Array();
+	
+	var minim_distance =50;
+	var friction =1/8;
+	
+	for (var n = 0;n<uniques_tags.items.length;n++){
+	
+		var node_graph = clone_(node_pattern);
+		
+		var size = uniques_tags.occurences[n];
+		
+		var name =  uniques_tags.items[n];
+		
+		
+		var mn = add_Mobile();
+		
+		mn.setMass(1);
+		mn.setFriction(friction);
+		mn.size=node_graph.getSize();
+		mn.setPosition({
+			x:center.position.x/size+(Math.random()*minim_distance/100)/size-minim_distance/200/size,
+			y:center.position.y/size+(Math.random()*minim_distance/100)/size-minim_distance/200/size
+		})
+		
+	
+		var node = {
+		
+			type:'node',
+			name :name,
+			size : size,
+			graph : node_graph,
+			branches : new Array(),
+			mobile : mn
+		}
+		
+		mesh.push(node);		
+		node_graph.E.innerHTML = uniques_tags.items[n];
+		nodes.push(node);
+	}
+	
+	var elements = document.getElementsByClassName('post');
+	
+	var branches = new Array();
+	
+	for (var e=0;e<elements.length;e++){
+
+		var element_tags = elements[e].getElementsByClassName('tags')[0].innerHTML;
+		
+		element_tags = element_tags.split(',');
+		
+		var branche_graph= new Object(elements[e].id);
+		
+		branche_graph.setAbsolute();
+		branche_graph.show();
+		
+		var mb = add_Mobile();
+		
+		mb.setMass(1);
+		mb.setFriction(friction);
+		mb.size=branche_graph.getSize();
+		mb.setPosition({
+			x:center.position.x+(Math.random()*minim_distance/2)-minim_distance,
+			y:center.position.y+(Math.random()*minim_distance/2)-minim_distance
+		})
+		
+		var branche = {
+		
+			type:'branche',
+			graph : branche_graph,
+			tags : element_tags,
+			nodes : new Array(),
+			mobile : mb
+		}
+		
+		mesh.push(branche);
+		
+		branches.push(branche);
+		
+	}
+	
+	function getNodeByName($name){
+		for(var n=0; n<nodes.length;n++){
+			if(nodes[n].name == $name){
+				return nodes[n];
+			}
+		}		
+	}
+
+	
+	function stretch_($A,$B,$limit){
+			
+		var distance2d = new Distance('2d');
+		connect_($A,"coords",distance2d,"pointA");
+		connect_($B,"coords",distance2d,"pointB");
+		
+		var bypass = new Operator('-',$limit);
+		
+		connect_(distance2d,'distance',bypass,'inputX');		
+
+		var coef = new Operator("/",$limit/6);
+		
+		var V=new Vector(1,false);
+		
+		connect_(bypass,'outputX',coef,'inputX');
+		connect_(coef,'outputX',V,'speed');
+		connect_($A,"coords",V,"pointA");	
+		connect_($B,"coords",V,"pointB");	
+		connect_(V,"output",$A,"force");
+	}		
+
+	for (var n1=0;n1<nodes.length;n1++){
+	
+		for (var n2=0;n2<nodes.length;n2++){
+		
+			if(nodes[n1]!==nodes[n2]){
+				stretch_(nodes[n1].mobile,nodes[n2].mobile, minim_distance*15);
+			}	
+		}	
+	}
+	for (var b=0;b<branches.length;b++){
+	
+		var list_of_tags= branches[b].tags;
+		
+		for(var t=0;t<list_of_tags.length;t++){
+		
+			var node = getNodeByName(list_of_tags[t]);
+			stretch_(node.mobile,branches[b].mobile,minim_distance*node.size);
+			stretch_(branches[b].mobile,node.mobile,minim_distance*node.size);
+			
+
+		}
+		for (var b2=0;b2<branches.length;b2++){
+		
+			if(branches[b].mobile !==branches[b2].mobile){
+				stretch_(branches[b].mobile,branches[b2].mobile,minim_distance*13);
+			}
+		}
+	
+	}
+	
+	/*-------GRAPHISMES-------------------*/
+	function link($A,$B,$model,$type){
+		
+		var bond=clone_($model);
+		
+		bond.setPivot("left top");
+		
+		var distance2d = new Distance('2d');
+		
+		var angle = new Angle(false);
+	
+		switch ($type){
+		
+			case 'rigid':
+				
+			break;
+			
+			case 'elastic':
+				connect_($A,"coords",distance2d,"pointA");
+				connect_($B,"coords",distance2d,"pointB");
+				connect_($A,"coords",angle,"pointA");
+				connect_($B,"coords",angle,"pointB");
+				connect_(angle,"angle",bond,"rotation");
+				connect_($A,"coords",bond,"position");
+				connect_(distance2d,"distance",bond,"width");		
+				
+			break;
+			default :
+				connect_($A,"coords",bond,"position");
+				connect_(distance2d,"distance",bond,"width");		
+			
+		}
+
+		
+	}
+	/*--------INTERFACE_UTILISATEUR----------*/
+	
+	
+	
+	
+	var UI = document.getElementById('UI');
+
+	var mode = 'move';
+	
+
+	var zoom_cursor = new Object('zoom_cursor');
+	
+	zoom_cursor.show();
+	
+	var range = getStyle(UI,"width")-(getStyle(UI,"paddingRight")+getStyle(UI,"paddingLeft"))-zoom_cursor.size.w-getStyle(UI,"paddingRight");
+	
+	//ZOOM
+	
+	var zoom_drag = new UserInput('drag',zoom_cursor.E,zoom_cursor.E);
+	
+	connect_(zoom_drag,'x', zoom_cursor,'x');	
+	
+	var drag2zoom = new Operator('*',3/range);
+	var zoom2drag = new Operator('/',3/range);
+	
+	
+	var boundries = new Clamp(1,range);
+	
+	connect_(zoom_drag,"x", boundries,'input');
+	connect_(boundries,"output",zoom_cursor,'x');
+	connect_(boundries,"output", drag2zoom,'inputX');
+	zoom_drag.values = {x:50,y:0};
+	
+	//SIZE
+	
+	var size_cursor = new Object('size_cursor');
+	
+	size_cursor.show();
+	
+	var size_drag = new UserInput('drag',size_cursor.E,size_cursor.E);
+	
+	connect_(size_drag,'x', size_cursor,'x');	
+	
+	var drag2size = new Operator('*',3/range);
+	
+	var boundries = new Clamp(1,range);
+	
+	connect_(size_drag,"x", boundries,'input');
+	connect_(boundries,"output",size_cursor,'x');
+	connect_(boundries,"output", drag2size,'inputX');
+	
+	var midX = new Average("average",3,false);
+	
+	var midY = new Average("average",3,false);
+	
+	var drag_coef = 0;
+	
+	var drag_matrix = new Matrix('2d');
+	
+	drag_matrix.f = function($input1,$input2){
+		var output = {
+			x:$input2.x+($input1.x-$input2.x)*drag_coef,
+			y:$input2.y+($input1.y-$input2.y)*drag_coef,
+		}
+		return output;
+	}
+	
+	for (var a=0; a<mesh.length; a++){
+	
+		if(mesh[a].type == 'branche'){
+		
+			connect_(drag2size,"outputX",mesh[a].graph,'scale');
+		}
+		var zoom = new Operator('*',1);
+		
+		connect_(drag2zoom,"outputX",zoom,'value');
+		connect_(mesh[a].mobile,"x",zoom,'inputX');
+		connect_(mesh[a].mobile,"y",zoom,'inputY');
+		
+		if(mesh[a].type == 'node'){
+		
+			var mesh_drag = new UserInput('drag',mesh[a].graph.E,mesh[a].graph.E);
+			
+			var mobile = mesh[a].mobile;
+			
+			connect_( mesh_drag,"coords",drag_matrix,a+'.x');
+			connect_( mesh[a].mobile,"coords",drag_matrix,a+'.y');
+			connect_( drag_matrix,a, mesh[a].mobile,"position");
+		}
+	
+		connect_(mesh[a].mobile,"x",midX,a);
+		connect_(zoom,"outputX",mesh[a].graph,"x");
+		connect_(zoom,"outputY",mesh[a].graph,"y");
+		connect_(mesh[a].mobile,"y",midY,a);
+	}
+	
+	var tree = new Object('tree');
+	
+	tree.setAbsolute();
+	tree.show();	
+
+	var view=document.getElementById('view');
+	
+	var ground = new Object('ground');
+	
+	ground.show();
+	
+	var bg_drag = new UserInput('drag',ground.E,view);
+	for (var bl=0;bl<branches.length;bl++){
+	
+		var list_of_tags= branches[bl].tags;
+		
+		for(var ta=0;ta<list_of_tags.length;ta++){
+		
+			var node = getNodeByName(list_of_tags[ta]);
+			
+			link(branches[bl].graph,node.graph,bond_pattern,'elastic');
+		}
+
+	}	
+	
+	//-----------------------BOUTTONS---------------
+	var modes = {
+	
+		move : {
+			e:document.getElementById('move_switch'),
+			status:true
+		},
+		pitch: {
+			e:document.getElementById('pitch_switch'),
+			status:false
+		}
+	}
+	
+	function toogle_mode($m){
+	
+		switch ($m){
+		
+			case 'move':
+			
+				var mode = modes.move;
+				
+				var pos = '';
+				
+				if(mode.status==false){
+				
+					bg_drag.init();
+					connect_(bg_drag,'coords', ground,'position');	
+					mode.status=true;
+					pos = 'on';
+					
+				}else{
+				
+					disconnect_(bg_drag,'coords', ground,'position');
+					mode.status=false;	
+					pos = 'off';					
+				}
+				
+				mode.e.className = 'switch '+pos;
+				
+			break
+			
+			case 'pitch':
+			
+				var mode = modes.pitch;
+				
+				var pos = '';
+				
+				if(mode.status==false){	
+					drag_coef = 1;
+					mode.status=true;
+					pos = 'on';
+				}else{
+					drag_coef = 0;
+					mode.status=false;
+					pos = 'off';
+				}
+				
+				mode.e.className = 'switch '+pos;
+				
+			break;
+		}
+	}
+	
+	
+
+	
+	
+	connect_(bg_drag,'coords', ground,'position');	
+	
+
+
+	
+	var coef = new Operator('*',-1);
+
+	connect_(midX,'output',coef,"inputX");
+	connect_(midY,'output',coef,"inputY");
+	connect_(coef,"outputX",tree,"x");
+	connect_(coef,"outputY",tree,"y");
+	
+	tree.E.style.marginTop=getStyle(view,"height")/2;
+	tree.E.style.marginLeft=getStyle(view,"width")/2;
+	
+	toogle_mode('move');
+	
+
+</script>
+</body></html>
