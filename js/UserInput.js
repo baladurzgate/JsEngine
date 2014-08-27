@@ -1,4 +1,4 @@
-	function UserInput($inputType){ // class userInput------ (allow to catch Mouse and Keyboard inputs)
+	function UserInput($inputType,$cible,$region){ // class userInput------ (allow to catch Mouse and Keyboard inputs)
 	
 		//engine
 		this.engine="";
@@ -7,6 +7,9 @@
 		this.name=$inputType;
 		this.getType = function(){return this.type}
 		this.getSerial = function(){return this.serial}
+		this.mouseDown = false;
+		this.mouseUp = false;
+		this.cible = $cible;
 		EG.add(this);
 		
 		//input
@@ -19,10 +22,10 @@
 		this.lastPosition={x:0,y:0};
 		switch(this.inputType){
 			case "mouse":
-				addEvent(document,"mousemove",function(e){
+				addEvent($cible,"mousemove",function(e){
 					console.log('move');
 					self.values= {
-						x:e.clientX+document.documentElement.scrollLeft ,
+						x:e.clientX+document.documentcible.scrollLeft ,
 						y:e.clientY+document.body.scrollTop
 					};
 					self.lastPosition= {
@@ -32,7 +35,7 @@
 				});
 			break;
 			case "click":
-				addEvent(document,"mousedown",function(e){
+				addEvent($cible,"mousedown",function(e){
 					self.values= {
 						x:e.clientX+document.documentElement.scrollLeft ,
 						y:e.clientY+document.body.scrollTop
@@ -41,12 +44,51 @@
 						x:self.values.x ,
 						y:self.values.y
 					};
+					self.mouseUp=false;
+					self.mouseDown=true;
 				});
 				addEvent(document,"mouseup",function(e){
 					self.values= {
 						x:self.lastPosition.x ,
 						y:self.lastPosition.y
 					};
+					self.mouseUp=true;
+					self.mouseDown=false;
+				});
+			break;
+			case "drag":
+				var distanceX = 0;
+				var distanceY = 0;
+				addEvent(document,"mousemove",function(e){
+					if(self.mouseDown==true){
+						self.values= {
+							x:e.clientX+document.documentElement.scrollLeft+distanceX,
+							y:e.clientY+document.body.scrollTop+distanceY
+						};
+					}
+
+				});
+				addEvent($region,"mousedown",function(e){
+					distanceX =( getStyle($cible,"left")+getStyle($region,"marginLeft"))-e.clientX+document.documentElement.scrollLeft 
+					distanceY = (getStyle($cible,"top")+getStyle($region,"marginTop"))-e.clientY+document.body.scrollTop
+					self.mouseDown=true;
+					self.mouseUp=false;
+				});
+				addEvent(document,"mouseup",function(e){
+					self.mouseUp=true;
+					self.mouseDown=false;
+					distanceX = 0;
+					distanceY = 0;
+				});
+			break;
+			case "scroll":
+				addEvent(document,"scroll",function(e){
+					var st = Math.max(document.documentElement.scrollTop,document.body.scrollTop);
+					if(!st){
+						self.values.y++;
+					}else if((st+document.documentElement.clientHeight)>=document.documentElement.scrollHeight ){
+						self.values.y--;
+					}
 				});
 			break;
 			case "keyboard":
