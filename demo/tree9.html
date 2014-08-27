@@ -293,6 +293,11 @@
 
 	var mouse = new UserInput('mouse',view,view);
 	
+	
+	
+	
+	/*------------------------------DECOUPAGE--------------------------*/
+	
 	for (var td=0;td<tag_divs.length;td++){
 	
 		var str = tag_divs[td].innerHTML;
@@ -398,7 +403,8 @@
 			}
 		}		
 	}
-
+	
+	/*-----------------------------------------------------PHYSIQUE---------------------------*/
 	
 	function stretch_($A,$B,$limit){
 			
@@ -452,6 +458,7 @@
 	}
 	
 	/*-------GRAPHISMES-------------------*/
+	
 	function link($A,$B,$model,$type){
 		
 		var bond=clone_($model);
@@ -486,10 +493,8 @@
 
 		
 	}
+	
 	/*--------INTERFACE_UTILISATEUR----------*/
-	
-	
-	
 	
 	var UI = document.getElementById('UI');
 
@@ -559,6 +564,7 @@
 		
 			connect_(drag2size,"outputX",mesh[a].graph,'scale');
 		}
+
 		var zoom = new Operator('*',1);
 		
 		connect_(drag2zoom,"outputX",zoom,'value');
@@ -655,7 +661,7 @@
 				var pos = '';
 				
 				if(mode.status==false){	
-					drag_coef = 1;
+					drag_coef = 10;
 					mode.status=true;
 					pos = 'on';
 				}else{
