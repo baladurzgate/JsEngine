@@ -1,4 +1,9 @@
-	//Engine by Alexandre Cormier (contact@alexandrecormier.fr)
+	//WebEngine by Alexandre Cormier (bighal.cormier@gmail.com)
+	//Beta v1.2;
+
+	
+	// CLASSES :
+	
 
 	//---------VARIABLE GLOBALE EG-------------
 	var EG=new Engine();
@@ -30,6 +35,7 @@
 			clock:new Array(),
 			trigger:new Array(),
 			variable:new Array(),
+			matrix:new Array(),
 			userInput:new Array(),
 			imageSequence:new Array(),
 			imageLoader:new Array(),
