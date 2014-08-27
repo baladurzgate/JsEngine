@@ -564,7 +564,6 @@
 		
 			connect_(drag2size,"outputX",mesh[a].graph,'scale');
 		}
-
 		var zoom = new Operator('*',1);
 		
 		connect_(drag2zoom,"outputX",zoom,'value');
@@ -661,7 +660,7 @@
 				var pos = '';
 				
 				if(mode.status==false){	
-					drag_coef = 10;
+					drag_coef = 1;
 					mode.status=true;
 					pos = 'on';
 				}else{
