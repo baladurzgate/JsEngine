@@ -10,6 +10,9 @@
 		this.mouseDown = false;
 		this.mouseUp = false;
 		this.cible = $cible;
+		this.onUp = function(){};
+		this.onDown = function(){};
+		this.onMove = function(){};
 		EG.add(this);
 		
 		//input
@@ -23,15 +26,15 @@
 		switch(this.inputType){
 			case "mouse":
 				addEvent($cible,"mousemove",function(e){
-					console.log('move');
 					self.values= {
-						x:e.clientX+document.documentcible.scrollLeft ,
+						x:e.clientX+document.documentElement.scrollLeft ,
 						y:e.clientY+document.body.scrollTop
 					};
 					self.lastPosition= {
 						x:self.values.x ,
 						y:self.values.y
 					};
+					self.onMove();
 				});
 			break;
 			case "click":
@@ -46,6 +49,7 @@
 					};
 					self.mouseUp=false;
 					self.mouseDown=true;
+					self.onDown();
 				});
 				addEvent(document,"mouseup",function(e){
 					self.values= {
@@ -54,6 +58,7 @@
 					};
 					self.mouseUp=true;
 					self.mouseDown=false;
+					self.onUp();
 				});
 			break;
 			case "drag":
@@ -65,6 +70,7 @@
 							x:e.clientX+document.documentElement.scrollLeft+distanceX,
 							y:e.clientY+document.body.scrollTop+distanceY
 						};
+						self.onMove;
 					}
 
 				});
@@ -73,12 +79,14 @@
 					distanceY = (getStyle($cible,"top")+getStyle($region,"marginTop"))-e.clientY+document.body.scrollTop
 					self.mouseDown=true;
 					self.mouseUp=false;
+					self.onUp();
 				});
 				addEvent(document,"mouseup",function(e){
 					self.mouseUp=true;
 					self.mouseDown=false;
 					distanceX = 0;
 					distanceY = 0;
+					self.onDown();
 				});
 			break;
 			case "scroll":
@@ -126,6 +134,16 @@
 					}
 				});
 			break;
+		}
+		this.init = function(){
+			this.values= {
+				x:e.clientX+document.documentElement.scrollLeft ,
+				y:e.clientY+document.body.scrollTop
+			};
+			this.lastPosition= {
+				x:self.values.x ,
+				y:self.values.y
+			};
 		}
 		//output
 		this.getValues=function(){
