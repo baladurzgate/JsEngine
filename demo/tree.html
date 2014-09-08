@@ -1,0 +1,479 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+<body>
+<style>
+	body{
+		background-color:#001111;
+		font-family:'arial';
+	}
+	#view{
+		height:80%;
+		width:100%;
+		overflow:hidden;
+		margin:auto;	
+		background-color:#001111;
+		cursor: move;
+	}
+	.slider{
+		display:block;
+		height:30;
+		position:relative;		
+		width:300;
+		z-index:3000;
+		margin-bottom:15;
+		margin-top:15;
+	}
+	.cursor{
+		height:20;
+		width:20;	
+		background-color:#000000;	
+		z-index:4000;
+	}
+	.rail{
+		display:block;
+		position:absolute;
+		margin-top:8;
+		width:100%;
+		height:5;
+		background-color:#000000;
+	}
+	.switch{
+		height:40;		
+		z-index:4000;
+		position:relative;
+		border-style:solid ;
+	}
+	.on{
+		background-color:#000088;
+		border-color:#33FFAA;
+		color:#33FFAA
+		
+	}
+	.off{
+		background-color:#111111;
+		border-color:#001133;
+		color:#112211;
+	}
+	#UI{
+		height:120;
+		width:300;	
+		background-color:#333333;
+		cursor: pointer;	
+		margin:auto;	
+		z-index:3000;	
+		position:relative;
+		padding:10;
+	}
+	#ground{
+		position:relative;
+	}
+	#tree{
+
+	}
+	.post{
+		height:100;
+		width:200;
+		border-style:solid;
+		background-color:#AAAAAA;
+		z-index:2000;
+		overflow:auto;
+	}
+	.title{
+		border-style:solid;
+		background-color:#EEEEEE;
+	}
+	.tags{
+		border-style:solid;
+		background-color:#aabbff;
+	}
+	.node{
+		padding:5;
+		font-size:1em;
+		border-color:#FFFFFF;
+		color:#FFFFFF;
+		background-color:#000000;
+		z-index:9000;
+		border-style:solid ;
+		border-color:#FFEEEE;
+		-webkit-user-select: none; /* Chrome/Safari */        
+		-moz-user-select: none; /* Firefox */
+		-ms-user-select: none; /* IE10+ */
+		-o-user-select: none;
+		user-select: none;
+	}
+	.bond{
+		width:100%;
+		height:4;
+		background-color:#DDDDDD;
+		margin-top:-2;
+	}
+</style>
+</br>
+</br>
+</br>
+<div id="view">
+	<div id="ground">
+		<div id="tree">
+			<div id="bond">
+				<div class="bond"></div>
+			</div>
+			<div id="node" class="node"></div>
+			<div id = "posts">
+				<div class="post" id="KARL_MARX">
+					<div class="title">KARL_MARX</div>
+					<div class="tags">grosse_barbe,mechants,morts</div>
+					<button onclick="alert('redirection vers ..');">lien</button>
+					<img src="http://www.walkingbutterfly.com/wp-content/uploads/2011/02/karl-marx-245x300.jpg">
+				</div>
+				<div class="post" id="GANDALF">
+					<div class="title">GANDALF</div>
+					<div class="tags">grosse_barbe,magie</div>
+				</div>
+				<div class="post" id="BAILLART">
+					<div class="title">BAILLART</div>
+					<div class="tags">chauve,libre</div>
+					<button onclick="alert('redirection vers ..');">lien</button>
+				</div>
+
+				<div class="post" id="ZIMMERMANN">
+					<div class="title">ZIMMERMANN</div>
+					<div class="tags">libre</div>
+					<button onclick="alert('redirection vers ..');">lien</button>
+				</div>
+				<div class="post" id="JESUS">
+					<div class="title">JESUS</div>
+					<div class="tags">magie</div>
+					<button onclick="alert('redirection vers ..');">lien</button>
+				</div>
+
+				<div class="post" id="STEVE_JOBS">
+					<div class="title">STEVE_JOBS</div>
+					<div class="tags">mechants,morts,chauve</div>
+					<button onclick="alert('redirection vers ..');">lien</button>
+				</div>
+
+				<div class="post" id="GOOGLE">
+					<div class="title">GOOGLE</div>
+					<div class="tags">mechants</div>
+					<button onclick="alert('redirection vers ..');">lien</button>
+				</div>
+				<div class="post" id="BILL_GATE">
+					<div class="title">BILL_GATE</div>
+					<div class="tags">mechants</div>
+					<button onclick="alert('redirection vers ..');">lien</button>
+				</div>
+				<div class="post" id="DESCARTES">
+					<div class="title">DESCARTES</div>
+					<div class="tags">moustache,philosophie</div>
+					<button onclick="alert('redirection vers ..');">lien</button>
+				</div>
+
+				<div class="post" id="george brassens">
+					<div class="title">george brassens</div>
+					<div class="tags">moustache</div>
+					<button onclick="alert('redirection vers ..');">lien</button>
+				</div>
+				<div class="post" id="la methode">
+					<div class="title">la methode</div>
+					<div class="tags">philosophie,livre,discipline</div>
+					<button onclick="alert('redirection vers ..');">lien</button>
+				</div>			
+				<div class="post" id="beluga">
+					<div class="title">beluga</div>
+					<div class="tags">marin,mamifere,chauve</div>
+					<button onclick="alert('redirection vers ..');">lien</button>
+				</div>		
+				<div class="post" id="belette">
+					<div class="title">belette</div>
+					<div class="tags">mamifere,terrestre</div>
+					<button onclick="alert('redirection vers ..');">lien</button>
+				</div>		
+				<div class="post" id="gimp">
+					<div class="title">gimp</div>
+					<div class="tags">outils,liberateur</div>
+					<button onclick="alert('redirection vers ..');">lien</button>
+				</div>
+				<div class="post" id="blender">
+					<div class="title">blender</div>
+					<div class="tags">outils</div>
+					<button onclick="alert('redirection vers ..');">lien</button>
+				</div>
+				<div class="post" id="photoshop">
+					<div class="title">photoshop</div>
+					<div class="tags">outils,privatif</div>
+				</div>
+				
+				
+				
+				<div class="post" id="14757">
+					<div class="title">gmail</div>
+					<div class="tags">blib1,blib3</div>
+				</div>	
+				<div class="post" id="2378978">
+					<div class="title">RICHARD_STALLMAN</div>
+					<div class="tags">blib2,blib1</div>
+				</div>	
+				<div class="post" id="5978978">
+					<div class="title">photoshop</div>
+					<div class="tags">blib2</div>
+				</div>
+				<div class="post" id="4878978">
+					<div class="title">gmail</div>
+					<div class="tags">blib1</div>
+				</div>	
+				<div class="post" id="777897">
+					<div class="title">RICHARD_STALLMAN</div>
+					<div class="tags">blib1,blib2</div>
+				</div>	
+				<div class="post" id="99789">
+					<div class="title">gmail</div>
+					<div class="tags">blib1</div>
+				</div>	
+				<div class="post" id="11789789">
+					<div class="title">RICHARD_STALLMAN</div>
+					<div class="tags">blib2</div>
+				</div>
+				
+			</div>				
+			<div id="center" class="center"></div>
+		</div>
+	</div>
+</div>
+<div id="UI">
+	<div id = "tools">
+		<span id="move_switch" class="switch on"  onclick="toogle_mode('move')">MOVE</span>
+	</div>
+	<div id = "zoom_slider" class = "slider" >
+		<div class = "rail"></div>
+		<div id = "zoom_cursor" class="cursor"></div>
+	</div>
+	<div id = "size_slider" class = "slider" >
+		<div class = "rail"></div>
+		<div id = "size_cursor" class="cursor"></div>
+	</div>
+</div>
+<script src="../js/lib/TweenLite.min.js"></script>
+<script src="../js/lib/CSSPlugin.min.js"></script>
+<script src="../js/Engine.js"></script>
+<script src="../js/utils.js"></script>
+<script src="../js/Object.js"></script>
+<script src="../js/ObjectGroup.js"></script>
+<script src="../js/Action.js"></script>
+<script src="../js/ActionQueue.js"></script>
+<script src="../js/utils.js"></script>
+<script src="../js/UserInput.js"></script>
+<script src="../js/UserInterface.js"></script>
+<script src="../js/Panel.js"></script>
+<script src="../js/Slider.js"></script>
+<script src="../js/Connection.js"></script>
+<script src="../js/Multiplane.js"></script>
+<script src="../js/Layer.js"></script>
+<script src="../js/Distance.js"></script>
+<script src="../js/Mobile.js"></script>
+<script src="../js/Force.js"></script>
+<script src="../js/Angle.js"></script>
+<script src="../js/Vector.js"></script>
+<script src="../js/Compare.js"></script>
+<script src="../js/Average.js"></script>
+<script src="../js/Clamp.js"></script>
+<script src="../js/Limit.js"></script>
+<script src="../js/Random.js"></script>
+<script src="../js/Clock.js"></script>
+<script src="../js/Operator.js"></script>
+<script src="../js/Sequence.js"></script>
+<script src="../js/Camera.js"></script>
+<script src="../js/Trigger.js"></script>
+<script src="../js/Matrix.js"></script>
+<script src="../js/Variable.js"></script>
+<script src="../js/Console.js"></script>
+<script src="../js/Fonction.js"></script>
+<script src="../js/build_mesh.js"></script>
+<script src="../js/Rope.js"></script>
+<script>
+	
+	EG.play();
+	
+	var view=document.getElementById('view');
+	
+	var c = new Console();
+	
+	var center = add_Mobile();
+	
+	var node_pattern = new Object('node');
+	
+	node_pattern.setAbsolute();
+
+	var bond_pattern = new Object('bond');
+	bond_pattern.show();
+	bond_pattern.setAbsolute();
+	
+
+	
+	/*-------PARSING-------------------*/
+	
+	var mesh = build_mesh('posts','tags');
+
+	/*--------INTERFACE_UTILISATEUR----------*/
+
+
+	
+	var mode = 'move';
+	
+	
+	//ZOOM
+	
+	var zoom_slider = new Slider('horizontal',1,3,'zoom_cursor','zoom_slider');
+	zoom_slider.init(0.7);
+	
+	//SIZE
+	
+	var size_slider = new Slider('horizontal',1,3,'size_cursor','size_slider');
+	size_slider.init(0.2);
+	
+	//DRAG
+	
+	var midX = new Average("average",3,false);
+	
+	var midY = new Average("average",3,false);
+	
+	
+	for (var a = 0 ; a<mesh.m.length; a++){
+	
+		if(mesh.m[a].type == 'branche'){
+		
+			connect_(size_slider,"output",mesh.m[a].graph,'scale');
+			
+		}
+		
+		var zoom_coef = new Operator('*',1);
+
+		connect_(zoom_slider,"output",zoom_coef,'value');
+		connect_(mesh.m[a].mobile,"x",zoom_coef,'inputX');
+		connect_(mesh.m[a].mobile,"y",zoom_coef,'inputY');
+		connect_(zoom_coef,"outputX",mesh.m[a].graph,"x");
+		connect_(zoom_coef,"outputY",mesh.m[a].graph,"y");
+		connect_(mesh.m[a].mobile,"x",midX,a);
+		connect_(mesh.m[a].mobile,"y",midY,a);		
+
+	
+	}
+	
+	var tree = new Object('tree');
+	
+	tree.setAbsolute();
+	tree.show();	
+
+	var view=document.getElementById('view');
+	
+	var ground = new Object('ground');
+	
+	ground.show();
+	
+	var bg_drag = new UserInput('drag',ground.E,view);
+
+	var coef = new Operator('*',-1);
+
+	connect_(midX,'output',coef,"inputX");
+	connect_(midY,'output',coef,"inputY");
+
+	connect_(coef,"outputX",tree,"x");
+	connect_(coef,"outputY",tree,"y");
+	
+	tree.E.style.marginTop=getStyle(view,"height")/2;
+	tree.E.style.marginLeft=getStyle(view,"width")/2;
+
+	connect_(bg_drag,'position', ground,'position');	
+	
+	
+	
+	//-----------------------BOUTTONS---------------
+	
+	var modes = {
+	
+		move : {
+			e:document.getElementById('move_switch'),
+			status:false
+		},
+		
+		pitch: {
+			e:document.getElementById('pitch_switch'),
+			status:false
+		}
+	}
+	
+	function toogle_mode($m){
+	
+		switch ($m){
+		
+			case 'move':
+			
+				var mode = modes.move;
+				
+				var pos = '';
+				
+				if(mode.status==false){
+				
+					bg_drag.init();
+					connect_(bg_drag,'position', ground,'position');	
+					mode.status=true;
+					pos = 'on';
+					
+				}else{
+				
+					disconnect_(bg_drag,'position', ground,'position');
+					mode.status=false;	
+					pos = 'off';					
+				}
+				
+				mode.e.className = 'switch '+pos;
+				
+			break
+			
+			case 'pitch':
+			
+				var mode = modes.pitch;
+				
+				var pos = '';
+				
+				if(mode.status==false){	
+					drag_coef = 1;
+					mode.status=true;
+					pos = 'on';
+				}else{
+					drag_coef = 0;
+					mode.status=false;
+					pos = 'off';
+				}
+				
+				mode.e.className = 'switch '+pos;
+				
+			break;
+		}
+	}
+	
+	for (var bl=0;bl<mesh.b.length;bl++){
+	
+		var list_of_cats= mesh.b[bl].cats;
+		
+		for(var ta=0;ta<list_of_cats.length;ta++){
+		
+			var node = getElementByName(mesh.n,list_of_cats[ta]);
+			
+			Rope(mesh.b[bl].graph,node.graph,bond_pattern,'elastic');
+			
+		}
+
+	}	
+	
+	
+	
+	
+	toogle_mode('move');
+	
+	
+
+</script>
+</body></html>
