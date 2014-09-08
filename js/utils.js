@@ -1,4 +1,4 @@
-// FONCTIONS UTILITAIRES CROSS BROWSERS :
+// FONCTIONS UTILITAIRES CROSS BROWSERS (en general) :
 	
 	function isAnArray($object){
 	
@@ -16,6 +16,48 @@
 		
 	}
 	
+//________________________________________________________________________ 
+
+	getDistance1d = function ($A,$B){
+	
+		var result=$B-$A;
+		return result;
+		
+	}
+	
+	getDistance2d = function($point1, $point2){
+	
+		var xs = 0;
+		var ys = 0;			 
+		xs = $point2.x - $point1.x;
+		xs = xs * xs;			 
+		ys = $point2.y - $point1.y;
+		ys = ys * ys;		 
+		return Math.sqrt( xs + ys );
+		
+	}	
+	
+	getVector = function($point1, $point2,$speed){
+	
+		var output={x:0,y:0};
+		if($speed!==0){
+			var A = $point1;
+			var B = $point2;
+			var dx = getDistance1d(A.x,B.x)
+			var dy = getDistance1d(A.y,B.y)
+			var D = getDistance2d(A,B);
+			if(D!==0){
+				var T=D/$speed;
+				output={
+					x:dx/T,
+					y:dy/T
+				}
+			}
+			return output;
+		}
+		return output;
+			
+	}
 //________________________________________________________________________
 	
 	function getStyle($element, $cssprop){
@@ -44,6 +86,20 @@
 		 }
 	}
 	
+	function setStyle($element,$attr,$val){
+	
+
+		if($element.style.setAttribute){
+		
+			$element.style.setAttribute($attr,$val);
+			
+		}else{
+		
+			$element.style[$attr] = $val;
+			
+		}
+			
+	}
 //________________________________________________________________________
 		
     function getParentElement ($element) {
@@ -57,6 +113,22 @@
     }
 
 //________________________________________________________________________
+		
+    function getChildrensOf ($element) {
+	
+		var parent = $element;
+		var mess = parent.childNodes;
+		var clean = new Array();
+		for (var i = 0 ; i<mess.length;i++){
+			if(mess[i].nodeName !== '#text'){
+				clean.push(mess[i]);
+			}
+		}
+		return clean;
+    }
+
+//________________________________________________________________________
+
 
 	function addEvent($elem,$eventType,$handler) {
 	
@@ -261,6 +333,7 @@
 //________________________________________________________________________
 
 	function isInRegion($point,$region){
+	
 		var W = getStyle($region,"width")+1;
 		var H = getStyle($region,"height")+1;
 		var X = getStyle($region,"marginLeft")+getStyle($region,"left")+1;
@@ -275,3 +348,163 @@
 	}
 
 //________________________________________________________________________
+
+	function Link_($A,$B,$model,$type){
+		
+		var bond=clone_($model);
+		
+		bond.setPivot("left top");
+		
+		var distance2d = new Distance('2d');
+		
+		var angle = new Angle(false);
+	
+		switch ($type){
+		
+			
+			case 'elastic':
+			
+				connect_($A,"position",distance2d,"pointA");
+				connect_($B,"position",distance2d,"pointB");
+				connect_($A,"position",angle,"pointA");
+				connect_($B,"position",angle,"pointB");
+				connect_(angle,"angle",bond,"rotation");
+				connect_($A,"position",bond,"position");
+				connect_(distance2d,"distance",bond,"width");		
+				
+			break;
+			
+			case 'rigid':
+				//WIP
+			break;
+			
+			default :
+			
+				connect_($A,"position",distance2d,"pointA");
+				connect_($B,"position",distance2d,"pointB");
+				connect_($A,"position",angle,"pointA");
+				connect_($B,"position",angle,"pointB");
+				connect_(angle,"angle",bond,"rotation");
+				connect_($A,"position",bond,"position");
+				connect_(distance2d,"distance",bond,"width");		
+			
+		}
+
+		
+	}
+	
+//__________________________________________________________________________
+
+	function stretch_($A,$B,$limit,$rigidity){
+			
+		var distance2d = new Distance('2d');
+		connect_($A,"position",distance2d,"pointA");
+		connect_($B,"position",distance2d,"pointB");
+		
+		var bypass = new Fonction();
+		bypass.f = function ($inputs){
+			var output = new Array();
+			
+			if( $rigidity > $limit ) {
+			
+				$rigidity = $limit;
+				
+			}
+			
+			var r = $rigidity / $limit;
+			
+			output[0] = ( $inputs[0] - $limit ) * r;
+			
+			return output ; 
+		}			
+		
+		connect_(distance2d,'distance',bypass,0);		
+		var V=new Vector(1,false);
+		
+		connect_(bypass,0,V,'speed');
+		connect_($A,"position",V,"pointA");	
+		connect_($B,"position",V,"pointB");	
+		connect_(V,"output",$A,"force");
+	}
+	
+	function push_($A,$B,$limit,$rigidity){
+			
+		var distance2d = new Distance('2d');
+		connect_($A,"position",distance2d,"pointA");
+		connect_($B,"position",distance2d,"pointB");
+		
+		var bypass = new Fonction();
+		bypass.f = function ($inputs){
+			var output = new Array();
+			if($inputs[0] < $limit ) {
+				output[0] = ( $inputs[0] - $limit ) * ( $rigidity / $limit );
+			}else{
+				output[0] = 0;
+			}
+			return output ; 
+		}	
+
+		connect_(distance2d,'distance',bypass,0);		
+		var V=new Vector(1,false);
+		
+		connect_(bypass,0,V,'speed');
+		connect_($A,"position",V,"pointA");	
+		connect_($B,"position",V,"pointB");	
+		connect_(V,"output",$A,"force");
+	}	
+	
+//____________________________________________________________________________
+	
+	function bypass($input,$limit,$rigidity){
+		var output = new Array();
+		
+		if( $rigidity > $limit ) {
+		
+			$rigidity = limit;
+			
+		}
+		
+		var r = $rigidity / $limit;
+		
+		output = ( $input - $limit ) * r;
+		
+		return output ; 
+	}
+	
+//____________________________________________________________________________
+				
+	function raw_stretch_($mobile1,$mobile2,$limit,$rigidity,$i){
+	
+		
+		var D = getDistance2d($mobile1.getPosition(),$mobile2.getPosition());
+	
+		var V = getVector($mobile1.getPosition(),$mobile2.getPosition(),bypass(D,$limit,$rigidity))
+		$mobile1.addForce(V,$i);
+
+	}
+			
+//____________________________________________________________________________
+
+	function pointTo_($A,$B,$offset){
+	
+		var angle = new Angle(false);
+		var offset = new Operator('+',$offset);
+			
+		connect_($A,'position', angle,'pointA');	
+		connect_($B,'position', angle,'pointB');
+		
+		connect_(angle,'angle', offset,'inputX');
+		connect_(angle,'angle', $A,'rotation');
+		//connect_(offset,'outputX', $A,'rotation');
+	
+	}
+	
+//____________________________________________________________________________
+	
+	function getElementByName($Array,$name){
+		for(var n=0; n<$Array.length;n++){
+			if($Array[n].name == $name){
+				return $Array[n];
+			}
+		}		
+	}		
