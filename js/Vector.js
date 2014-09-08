@@ -17,27 +17,33 @@
 			this.speed=$s;
 		}
 		//ouput
-		this.ouput={x:0,y:0};
+		this.output={x:0,y:0};
 		
 		this.getOutput = function(){
-			if(this.speed==0){this.speed=1;}
-			if(this.speed&&this.input){
-				var A=this.input.A;
-				var B=this.input.B;
-				var dx=this.getDistance1d(A.x,B.x)
-				var dy=this.getDistance1d(A.y,B.y)
-				var D=this.getDistance2d(A,B);
-				if(D!==0){
-					var T=D/this.speed;
-					this.output={
-						x:dx/T,
-						y:dy/T
+		
+			this.output={x:0,y:0};
+			
+			if(this.speed!==0){
+				if(this.speed&&this.input){
+					var A=this.input.A;
+					var B=this.input.B;
+					var dx=this.getDistance1d(A.x,B.x)
+					var dy=this.getDistance1d(A.y,B.y)
+					var D=this.getDistance2d(A,B);
+					if(D!==0){
+						var T=D/this.speed;
+						this.output={
+							x:dx/T,
+							y:dy/T
+						}
 					}
+					return this.output;
 				}
 				return this.output;
 			}
-			return {x:0,y:0};
+			return this.output;
 		}	
+		
 		this.getDistance1d = function ($A,$B){
 			var A=$A;
 			var B=$B;
