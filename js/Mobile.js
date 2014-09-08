@@ -13,6 +13,7 @@
 		this.friction=1;
 		this.slowdown=1;
 		this.size = {w:1,h:1};
+		this.style = 'normal'
 		this.forces = new Array();
 		
 		this.getPosition = function(){
@@ -54,10 +55,17 @@
 		this.setForce = function($f){
 			this.force = $f;
 		}
+		this.setSize = function($s){
+			this.size= $s;
+		}
+		this.setStyle = function($s){
+			this.style= $s;
+		}
 		this.setFriction = function($f){
 			this.friction = $f;
 		}			
 		this.addForce = function ($f,$id){
+			if($id==undefined)$id=0;
 			var existing_force = this.getForceById($id);
 			if(existing_force==false) {
 				var submit = { 
@@ -85,20 +93,36 @@
 		
 			mobile.force = {x:0,y:0};
 			
-			for(var i = 0 ; i < mobile.forces.length;i++){
+			for ( var i = 0 ; i < mobile.forces.length ; i++ ) {
 			
 				mobile.force.x += mobile.forces[i].x;
 				mobile.force.y += mobile.forces[i].y;
-				//mobile.force.x +=-1/ mobile.forces[i].x
-				//mobile.force.y +=-1/ mobile.forces[i].y
+
 			}
+			switch (mobile.style){
 			
-			mobile.acceleration.x = mobile.force.x * (1 / mobile.mass) -(mobile.friction * mobile.speed.x);
-			mobile.acceleration.y = mobile.force.y * (1 / mobile.mass) -(mobile.friction * mobile.speed.y);
-			mobile.speed.x += mobile.acceleration.x ;
-			mobile.speed.y += mobile.acceleration.y ;  
-			mobile.position.x += mobile.speed.x ;
-			mobile.position.y += mobile.speed.y ;
+				case 'wax' :	
+					mobile.acceleration.x = mobile.force.x * (1 / mobile.mass) 
+					mobile.acceleration.y = mobile.force.y * (1 / mobile.mass) 	
+					mobile.speed.x += mobile.acceleration.x ;
+					mobile.speed.y += mobile.acceleration.y ;  
+					mobile.speed.x *= mobile.friction;		
+					mobile.speed.y *= mobile.friction;
+					mobile.position.x += mobile.speed.x ;
+					mobile.position.y += mobile.speed.y ;					
+				break;
+				
+				case 'normal' :
+					mobile.acceleration.x = mobile.force.x * (1 / mobile.mass) - (mobile.friction * mobile.speed.x);
+					mobile.acceleration.y = mobile.force.y * (1 / mobile.mass) - (mobile.friction * mobile.speed.y);
+					mobile.speed.x += mobile.acceleration.x ;
+					mobile.speed.y += mobile.acceleration.y ;  
+					mobile.position.x += mobile.speed.x ;
+					mobile.position.y += mobile.speed.y ;
+				break;
+				
+			}
+
 			
 			
 		}
@@ -121,5 +145,12 @@
 			var process=EG.getProcessByID(this.serial);
 			process.on = false;
 			this.activated = false;
+		}
+		
+		this.kill = function (){
+			
+			this.desactivate();
+			EG.removeFromOutliner(this);
+		
 		}
 	}
