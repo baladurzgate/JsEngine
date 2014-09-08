@@ -1,6 +1,7 @@
-	function ImageSequence (){ // class ImageSequence ------ (called by Object)
+	function Sequence (){ // class sequence ------ (called by Object)
+	
 		//engine
-		this.type="imageSequence";
+		this.type="sequence";
 		this.serial=EG.generateSerial();
 		this.name=this.serial;
 		this.process;
@@ -10,9 +11,11 @@
 		this.getImages = function (){
 			return this.images;
 		}
+		
 		this.getCurrentImage = function (){
 			return this.currentImage;
 		}
+		
 		var self = this;
 		this.setCurrentImage = function ($i,$mode){
 			var L = self.images.length;
@@ -34,6 +37,7 @@
 			}
 			self.displayImage(i);
 		}
+		
 		this.addImage = function ($image){
 			this.images.push($image);
 		}
@@ -52,11 +56,15 @@
 		this.loop = false;
 		this.currentFrame = 0;
 		this.timer=0;
+		
 		this.onComplete= function(){
 			console.log("Complete");
 		};
+		
 		this.play = function ($way,$from,$to,$loop){
+		
 			if(this.images.length>1){
+			
 					console.log("play");
 					this.way=$way;
 					this.from = $from;
@@ -82,10 +90,12 @@
 					}
 					this.displayImage(this.currentFrame);
 					return true;
+					
 			}else{
 				return false;
 			}
 		}
+		
 		this.stop = function (){
 			window.clearInterval(this.interval);
 			this.interval=false;
@@ -93,49 +103,52 @@
 				console.log("Complete");
 			};
 		}
+		
 		this.init = function(){
 			this.currentFrame=0;
 			this.displayImage(0);
 		}
+		
 		this.updateFrame = function (){	
-			var L=self.images.length;
-				if(self.timer%4/self.frameRate==0){
-					switch (self.way){
-						// play backward
-						case '<':
-							if(self.currentFrame!=self.to){	
-								if(self.currentFrame<=0){
-									self.currentFrame = L;
-								}
-								self.currentFrame-=1;
-							}else{
-								if(self.loop){
-									self.currentFrame=self.from;
-								}else{
-									self.onComplete();
-								}
-							}	
-						break;
-						// play foward
-						case '>':
-							if(self.currentFrame!=self.to){	
-								self.currentFrame+=1;
-								if(self.currentFrame>=L){
-									self.currentFrame = 0;
-								}
-							}else{
-								if(self.loop){
-									self.currentFrame=self.from;
-								}else{
-									self.onComplete();
-								}
+				var L=self.images.length;
+			if(self.timer%4/self.frameRate==0){
+				switch (self.way){
+					// play backward
+					case '<':
+						if(self.currentFrame!=self.to){	
+							if(self.currentFrame<=0){
+								self.currentFrame = L;
 							}
-						break;
-					}
+							self.currentFrame-=1;
+						}else{
+							if(self.loop){
+								self.currentFrame=self.from;
+							}else{
+								self.onComplete();
+							}
+						}	
+					break;
+					// play foward
+					case '>':
+						if(self.currentFrame!=self.to){	
+							self.currentFrame+=1;
+							if(self.currentFrame>=L){
+								self.currentFrame = 0;
+							}
+						}else{
+							if(self.loop){
+								self.currentFrame=self.from;
+							}else{
+								self.onComplete();
+							}
+						}
+					break;
+				}
 				self.displayImage(self.currentFrame);
 			}
 			self.timer++;
 		}
+		
 		this.displayImage = function($index){
 			if(this.images[$index]!==undefined){
 				this.images[$index].style.display = 'block';
@@ -146,15 +159,15 @@
 				}
 			}
 		}
+		
 		//DOM
 		this.parentObject ="";
 		this.container = "";
 		this.buildFromDOM =  function(){
-			var div = this.parentObject.E.getElementsByClassName('imageSequence');
+			var div = this.parentObject.E.getElementsByClassName('sequence');
 			if(div.length>=1){
-				
 				this.container = div[0];
-				var images = this.container.getElementsByTagName('img');
+				var images = getChildrensOf(div);
 				if(images.length!=0){
 					for (var i = 0 ; i < images.length ; i++){
 						this.addImage(images[i]);
