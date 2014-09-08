@@ -1,0 +1,149 @@
+<html>
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Allumette</title>
+
+		<style>
+
+			body{
+			
+				width:1000;
+				margin:auto;
+				background-color:#010201;
+			}
+			
+			#main{
+				top:100;
+				-webkit-user-select: none; /* Chrome/Safari */        
+				-moz-user-select: none; /* Firefox */
+				-ms-user-select: none; /* IE10+ */
+
+				/* Rules below not implemented in browsers yet */
+				-o-user-select: none;
+				user-select: none;
+				position:absolute;
+				width:1000;
+				height:700;
+				margin:auto;
+				
+			}
+			.blob{
+				height:10;
+				width:10;
+				background-color:#FFFFFF;
+			}
+		</style>
+	
+	</head>
+	
+	<body>
+		</br>
+		
+		<div id = "main">
+			<div id="blob">
+				<div class = "blob">
+				</div>
+			</div>
+		</div>
+		
+		<script src="../js/lib/TweenLite.min.js"></script>
+		<script src="../js/lib/CSSPlugin.min.js"></script>
+		<script src="../js/Engine.js"></script>
+		<script src="../js/Object.js"></script>
+		<script src="../js/utils.js"></script>
+		<script src="../js/Action.js"></script>
+		<script src="../js/ActionQueue.js"></script>
+		<script src="../js/Connection.js"></script>
+		<script src="../js/Distance.js"></script>
+		<script src="../js/Angle.js"></script>
+		<script src="../js/UserInput.js"></script>
+		<script src="../js/Sequence.js"></script>
+		<script src="../js/Clock.js"></script>
+		<script src="../js/Orbit.js"></script>
+		<script src="../js/Meter.js"></script>
+		<script src="../js/Variable.js"></script>
+		<script src="../js/Limit.js"></script>
+		<script src="../js/Trigger.js"></script>
+		<script src="../js/Operator.js"></script>
+		<script src="../js/Mobile.js"></script>
+		<script src="../js/Fonction.js"></script>
+		<script src="../js/Vector.js"></script>
+		<script src="../js/Random.js"></script>
+		<script src="../js/Print.js"></script>
+		<script src="../js/Particule.js"></script>
+		<script src="../js/Emitter.js"></script>
+		<script src="../js/ParticuleSystem.js"></script>
+		<script>
+			
+			var main = document.getElementById("main");
+
+			var cc = new Print();
+			
+			var flamme = new Object("flamme");
+			flamme.setAbsolute();
+
+			
+			var blob = new Object("blob");
+			blob.setAbsolute();
+			
+			var P = new ParticuleSystem();
+			
+			var E = new Emitter(blob,{x:0,y:0},{h:700,w:1000});
+			E.setForce({x:0,y:1});
+			E.setRandom({x:0,y:0},{x:0,y:0});
+			E.setEmissionRate(1000);
+			E.setInitialSpeed(1);
+			P.setLifeSpan(80,30);
+			P.add_Emitter(E);
+		
+			var mouse = new UserInput('mouse',main);
+			
+			connect_(mouse,'position',P,0);
+			//connect_(mouse,'position',E,'position');
+				
+			P.birth = function ($p1,$input){
+			
+				//raw_stretch_($p1.mobile,$p2.mobile,100,3,$i+10);
+
+			}			
+			
+			P.global = function ($p,$i){
+				var t = 1
+				var coef = 0.99
+				if($p.bonus_data[1] == undefined && $p.bonus_data[2] == undefined){
+					$p.bonus_data[1] = 0;
+					$p.bonus_data[2] = 0;
+				}
+				$p.bonus_data[1]+= (Math.random()*t)-(t/2);
+				$p.bonus_data[2]+= (Math.random()*t)-(t/2);
+				$p.bonus_data[1]*=coef;
+				$p.bonus_data[2]*=coef;
+				$p.mobile.addForce({x:$p.bonus_data[1]*coef,y:$p.bonus_data[2]*coef},2);
+				
+				$p.graphism.setAlpha($p.getLifeLeft());
+
+				$p.graphism.setRotation($p.age);
+				
+			}
+				
+			P.interaction = function ($p1,$p2,$input,$i){
+			
+				//raw_stretch_($p1.mobile,$p2.mobile,100,3,$i+10);
+
+			}
+			
+			P.birth_interaction = function ($p1,$p2,$i){
+				
+				//stretch_($p1.mobile,$p2.mobile,100,20);
+				
+			}			
+
+
+
+			EG.play();
+
+		</script>
+	</body>
+</html>
