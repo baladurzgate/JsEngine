@@ -1,4 +1,4 @@
-Moteur  de jeux en javascript
+Framework Javascript nodal
 
 -js : code source du moteur 
 
